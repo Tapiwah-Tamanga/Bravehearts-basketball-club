@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Girls Roster | Bravehearts Basketball</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .player-card-clip {
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+        }
+        .text-glow-red {
+            text-shadow: 0 0 15px rgba(206, 17, 38, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fcf9f8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dcd9d9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ce1126;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#410004",
+                        "error-container": "#93000a",
+                        "surface-container": "#f6f3f2",
+                        "secondary-fixed-dim": "#00873a",
+                        "secondary-container": "#00c354",
+                        "tertiary": "#676767",
+                        "surface-bright": "#fcf9f8",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-fixed-variant": "#005320",
+                        "tertiary-container": "#e6e6e6",
+                        "surface-tint": "#c0001f",
+                        "primary-fixed": "#ffdad7",
+                        "background": "#fcf9f8",
+                        "outline": "#857371",
+                        "secondary": "#006d2c",
+                        "on-secondary-fixed": "#002109",
+                        "on-secondary-container": "#002109",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-tertiary-container": "#1b1b1b",
+                        "secondary-fixed": "#93f9a2",
+                        "primary-fixed-dim": "#ffb3ae",
+                        "surface-container-highest": "#e6e1e0",
+                        "surface": "#fcf9f8",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#f0edec",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-background": "#201a19",
+                        "primary-container": "#ce1126",
+                        "inverse-primary": "#ffb3ae",
+                        "primary": "#c0001f",
+                        "outline-variant": "#d8c2c0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "inverse-on-surface": "#fcf0ed",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "inverse-surface": "#362f2e",
+                        "surface-container-low": "#faf6f5",
+                        "on-surface": "#201a19",
+                        "on-surface-variant": "#534342",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#f4dddb",
+                        "on-primary-container": "#ffffff",
+                        "on-primary-fixed-variant": "#930015"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "lg": "24px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Montserrat"],
+                        "body-md": ["Inter"],
+                        "stats-number": ["JetBrains Mono"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stats-number": ["32px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-[280px] bg-surface-container border-r-2 border-surface-container-highest flex-col py-xl z-50">
+<div class="px-lg mb-xl">
+<h1 class="font-headline-md text-headline-md font-black text-primary">Bravehearts HQ</h1>
+<p class="font-body-md text-body-md opacity-60">Management</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="bg-primary-container text-on-primary-container border-l-4 border-primary px-lg py-md flex items-center gap-md font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">female</span> Girls
+            </a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">groups</span> Ladies
+            </a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">sports_basketball</span> Men
+            </a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">boy</span> Boys
+            </a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">child_care</span> Youth
+            </a>
+</nav>
+<div class="px-lg mt-auto pt-xl border-t border-surface-container-highest">
+<button class="w-full bg-primary-container text-on-primary-container py-md px-lg font-label-caps text-label-caps rounded-sm hover:brightness-110 active:scale-98 transition-all mb-lg">
+                Add New Player
+            </button>
+<div class="space-y-xs">
+<a class="text-on-surface-variant px-lg py-sm flex items-center gap-md hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+<a class="text-on-surface-variant px-lg py-sm flex items-center gap-md hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<main class="md:ml-[280px] min-h-screen relative">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-background border-b-2 border-primary-container/20 z-40 backdrop-blur-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-full mx-auto">
+<div class="flex items-center gap-lg">
+<span class="font-headline-md text-headline-md font-black text-on-surface uppercase tracking-tighter">Bravehearts <span class="text-primary">Basketball</span></span>
+<nav class="hidden lg:flex gap-lg ml-xl">
+<a class="text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="home.html">Home</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="game_performance_stats_light_1/code.html">Game Stats</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="bravehearts_ladies_roster_light/code.html">Roster</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md text-body-md" href="management_dashboard_light_1/code.html">Booking</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden sm:flex gap-sm">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-all">person</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-all">notifications</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-lg py-sm font-label-caps text-label-caps active:scale-95 duration-100">Tickets</button>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<section class="p-margin-mobile md:p-margin-desktop">
+<div class="mb-xl">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] font-bold">Division Profile</span>
+<h2 class="font-display-lg text-headline-lg-mobile md:text-display-lg uppercase font-black leading-none mt-xs text-on-surface">Girls Team</h2>
+<div class="w-32 h-2 bg-primary-container mt-md"></div>
+</div>
+<!-- Stats Overview Bento -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-xl">
+<div class="md:col-span-2 bg-surface-container border border-surface-container-highest p-lg relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary opacity-5 -mr-16 -mt-16 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-md">Division Win Rate</p>
+<p class="font-stats-number text-stats-number text-secondary">82.4%</p>
+<div class="mt-xl flex gap-sm">
+<div class="h-1 flex-1 bg-secondary"></div>
+<div class="h-1 flex-1 bg-secondary"></div>
+<div class="h-1 flex-1 bg-secondary"></div>
+<div class="h-1 flex-1 bg-surface-dim"></div>
+</div>
+</div>
+<div class="bg-surface-container border border-surface-container-highest p-lg">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-md">Active Players</p>
+<p class="font-stats-number text-stats-number text-on-surface">18</p>
+</div>
+<div class="bg-primary-container p-lg text-on-primary-container border-l-4 border-on-surface">
+<p class="font-label-caps text-label-caps opacity-80 mb-md">Next Match</p>
+<p class="font-headline-md text-headline-md font-black uppercase">vs. Blantyre Tigers</p>
+<p class="font-body-md text-body-md mt-xs opacity-90">Sat, 14:00 CAT</p>
+</div>
+</div>
+<!-- Player Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-xl">
+<!-- Player 1 -->
+<div class="group relative bg-surface-container border border-surface-container-highest player-card-clip transition-all duration-300 hover:border-primary hover:shadow-xl">
+<div class="aspect-[4/5] overflow-hidden relative bg-black">
+<img alt="Chifundo Mwale" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEfbCrG4NJl1nt4kW2HLOS2mTLrSd-y7daFb5AgmkZoCeHYq1uFHHkyr-lExhSqu61fG7rEjv5lF93-gPj8_RS-r8v-JJ4cxzkHbp5dIdJokHctZyNjODjrP5taBdu0h1zxyCNUTQ6x-t0uMGoChao1YYhRBUhNSbaBsniBCzO7S8wmtUepbXSf654NVRzd_TRevd_xZGav1hk__AKSQ1iVr1JMsmSXFr6keHP9fZPlaDMMzVazrilde8-6LeGkD6So2-jEcMPSlU0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-4 left-4 font-stats-number text-stats-number text-primary opacity-10 group-hover:opacity-30 transition-opacity">04</div>
+</div>
+<div class="p-lg -mt-12 relative z-10">
+<h3 class="font-headline-md text-headline-md font-black uppercase mb-xs group-hover:text-primary transition-colors text-on-surface">Chifundo Mwale</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-lg">Point Guard / 5'8"</p>
+<div class="grid grid-cols-2 gap-md border-t border-surface-container-highest pt-md">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">24.5</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">6.2</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Player 2 -->
+<div class="group relative bg-surface-container border border-surface-container-highest player-card-clip transition-all duration-300 hover:border-primary hover:shadow-xl">
+<div class="aspect-[4/5] overflow-hidden relative bg-black">
+<img alt="Tionge Banda" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4M1rvL7w1noa0QWgEbUIRnfqB9umC4wEebd4xLVFkPp2HwO7L1QlEU4RIH6BcCi5gPMHSKkg7zgR43yLrrjERmMa1n-OZaQNsVcyi9GLqh4YjmNx8Yzmiw4o6_6k5lKAfzw9I4NGkfsYH8gPy5f9483jvTK210BxDnRaOEKsPc9HMY7r3I32uUtNBkK9kQcoS37fQzW_ogziPal1VoPI9X5ISVudq1R7KeJg0qxaRkYaGAWsZjG_v20bUO5HZ3OVdjAPAh88QA1vT"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-4 left-4 font-stats-number text-stats-number text-primary opacity-10 group-hover:opacity-30 transition-opacity">11</div>
+</div>
+<div class="p-lg -mt-12 relative z-10">
+<h3 class="font-headline-md text-headline-md font-black uppercase mb-xs group-hover:text-primary transition-colors text-on-surface">Tionge Banda</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-lg">Small Forward / 6'0"</p>
+<div class="grid grid-cols-2 gap-md border-t border-surface-container-highest pt-md">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">18.2</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">12.5</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Player 3 -->
+<div class="group relative bg-surface-container border border-surface-container-highest player-card-clip transition-all duration-300 hover:border-primary hover:shadow-xl">
+<div class="aspect-[4/5] overflow-hidden relative bg-black">
+<img alt="Lumbani Phiri" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYhxVcTInvSc_11t312JRW-L0MYgTO2zLc-oN1kkE7PBfApJvHJMIO2uOARbeDxXRhLyjL0Y7UDObqNOsFWw4GkzmV54J2_BWdrgHH4JdqNrhAQVyIrDaHxjetA2FoKR70v-qrWKBo84WbAHg-rUpAnvA8BtdtccLTn6F9XPpmu3Jir4YHmaBmCUSpl0ReaAV7YpSG0rncR8sTj2kgnQ2IO0bZOpp1G39C7H0oRFCaK_pfBmgxC3Ecv7CqtRg8WeaVHtU3COLPoPDA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-4 left-4 font-stats-number text-stats-number text-primary opacity-10 group-hover:opacity-30 transition-opacity">22</div>
+</div>
+<div class="p-lg -mt-12 relative z-10">
+<h3 class="font-headline-md text-headline-md font-black uppercase mb-xs group-hover:text-primary transition-colors text-on-surface">Lumbani Phiri</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-lg">Shooting Guard / 5'9"</p>
+<div class="grid grid-cols-2 gap-md border-t border-surface-container-highest pt-md">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">15.7</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">4.1</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Player 4 -->
+<div class="group relative bg-surface-container border border-surface-container-highest player-card-clip transition-all duration-300 hover:border-primary hover:shadow-xl">
+<div class="aspect-[4/5] overflow-hidden relative bg-black">
+<img alt="Nelia Chirwa" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC43rar1T9oeI62ul0O4EWuHXDNZxdgwDqWyDcjysTkXiSTiC7r-WBq4BL-97xSXhkrwi55v61PhJZSNeS6g6lSRI8xHhAQnJ48dGbiiwsoawjl5QaA2WhhNO0znx-HQ9pXO5GnUZ0iNBW6kwIDgjEBgZhlIGA6nrXDXh9MXf98lf6wanpCzU1_psbX5eL9Ag7cqZK-3x1WeQNUvvABfyAENlYzOUhVcdHJ63EInAx4e2B5vnXAG2Zugb-_eKgwzaYM38m67n5HCsER"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-4 left-4 font-stats-number text-stats-number text-primary opacity-10 group-hover:opacity-30 transition-opacity">08</div>
+</div>
+<div class="p-lg -mt-12 relative z-10">
+<h3 class="font-headline-md text-headline-md font-black uppercase mb-xs group-hover:text-primary transition-colors text-on-surface">Nelia Chirwa</h3>
+<p class="font-label-caps text-label-caps text-secondary mb-lg">Center / 6'3"</p>
+<div class="grid grid-cols-2 gap-md border-t border-surface-container-highest pt-md">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">12.9</p>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">14.8</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Component -->
+<footer class="w-full border-t-4 border-primary-container bg-surface-container-lowest mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-xl gap-lg max-w-full mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md text-primary font-black uppercase tracking-tighter">Bravehearts</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant hidden sm:block">© 2024 Bravehearts Basketball Team. All Rights Reserved.</span>
+</div>
+<nav class="flex gap-lg flex-wrap justify-center">
+<a class="font-label-caps text-label-caps text-on-surface hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface hover:text-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface hover:text-primary hover:underline transition-all" href="#">Contact Us</a>
+<a class="font-label-caps text-label-caps text-on-surface hover:text-primary hover:underline transition-all" href="#">Sponsorship</a>
+</nav>
+</div>
+</footer>
+</main>
+<!-- Interactive Layer: Hover FX for stats -->
+<script>
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Subtle interaction logic could go here
+            });
+        });
+        
+        // Dynamic sticky header shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-lg');
+                header.classList.add('bg-background/95');
+            } else {
+                header.classList.remove('shadow-lg');
+                header.classList.remove('bg-background/95');
+            }
+        });
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTarget = 'home.html';
+    document.querySelectorAll('button').forEach((button) => {
+      if (button.getAttribute('type') === 'submit') return;
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = button.getAttribute('data-link') || defaultTarget;
+        window.location.href = target;
+      });
+    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-link') || defaultTarget);
+    });
+  });
+</script>
+</body></html>

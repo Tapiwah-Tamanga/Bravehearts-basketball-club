@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Boys Roster | Bravehearts Basketball</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .player-card-glow:hover {
+            box-shadow: 0 10px 20px rgba(206, 17, 38, 0.1);
+        }
+        .pulse-live {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; background-color: #007932; }
+            50% { opacity: .7; background-color: #77dc88; }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fcf9f8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dcd9d9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ce1126;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#fcf9f8",
+                      "on-surface": "#1e2020",
+                      "surface-dim": "#dcd9d9",
+                      "surface-bright": "#fcf9f8",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "surface-container": "#f1edec",
+                      "surface-container-high": "#ebe7e6",
+                      "surface-container-highest": "#e5e1e0",
+                      "on-surface-variant": "#444747",
+                      "outline": "#747878",
+                      "outline-variant": "#c4c7c7",
+                      "primary": "#ce1126",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#ffdad7",
+                      "on-primary-container": "#410004",
+                      "secondary": "#006d2c",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#99fea7",
+                      "on-secondary-container": "#002109",
+                      "tertiary": "#303030",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#e2e2e2",
+                      "on-tertiary-container": "#1b1b1b",
+                      "background": "#fcf9f8",
+                      "on-background": "#1e2020",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#410002"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "48px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "gutter": "20px",
+                      "lg": "24px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Montserrat"],
+                      "body-md": ["Inter"],
+                      "stats-number": ["JetBrains Mono"],
+                      "headline-lg": ["Montserrat"],
+                      "headline-md": ["Montserrat"],
+                      "headline-lg-mobile": ["Montserrat"],
+                      "display-lg": ["Montserrat"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "stats-number": ["32px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                      "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container border-r border-surface-container-highest flex flex-col py-xl z-40 hidden md:flex">
+<div class="px-lg mb-xl">
+<h1 class="font-headline-md text-headline-md font-black text-primary">Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Bravehearts HQ</p>
+</div>
+<nav class="flex-grow space-y-xs">
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">female</span>
+<span class="font-body-md text-body-md">Girls</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-md text-body-md">Ladies</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">sports_basketball</span>
+<span class="font-body-md text-body-md">Men</span>
+</a>
+<!-- Active Item: Boys -->
+<a class="bg-primary text-on-primary px-lg py-md flex items-center gap-md hover:translate-x-1 transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">boy</span>
+<span class="font-body-md text-body-md font-bold">Boys</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-container-high hover:translate-x-1 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">child_care</span>
+<span class="font-body-md text-body-md">Youth</span>
+</a>
+</nav>
+<div class="px-lg mt-auto border-t border-surface-container-highest pt-lg space-y-md">
+<button class="w-full bg-primary text-on-primary py-md px-lg font-label-caps text-label-caps hover:bg-opacity-90 transition-all flex items-center justify-center gap-sm shadow-md">
+<span class="material-symbols-outlined">person_add</span>
+                Add New Player
+            </button>
+<div class="flex items-center gap-md px-sm py-xs">
+<img alt="Admin Profile" class="w-10 h-10 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOj7cVeohHCPz1or3HbA_9O2FwtxKtgeZMeKCv_1Nl35chEjId9UUE0MnqL-peEXFFQvaubPJXUBH2OjKEny0rhTTIiLWl57gfT_mcEGMiNypcI4m2E9xHa8UWHp4mk4K4_H-5rtlYI68WYM3_xQ9oT_4S7pwez2McqMbBEcizPEXUiTotDCqaq_gQQGII8Hu--PJnr5p-KB6jAY5GYBPClqvgYKURY3eaz5rZxFv670rYNmjI0ipCAiHhnWPvaWnFJ-cl3xPYTedL"/>
+<div>
+<p class="font-body-md text-body-md font-bold text-on-surface">Admin</p>
+<p class="text-[10px] uppercase font-bold text-primary tracking-widest">Master Coach</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow md:ml-[280px] w-full">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-background border-b border-surface-container-highest flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md z-50">
+<div class="flex items-center gap-md">
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary text-3xl">menu</span>
+</div>
+<span class="font-headline-md text-headline-md font-black text-on-surface uppercase tracking-tighter"><span class="text-primary">Bravehearts</span> Basketball</span>
+</div>
+<div class="hidden lg:flex items-center gap-xl">
+<a class="text-on-surface hover:text-primary transition-colors font-body-md" href="home.html">Home</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md" href="game_performance_stats_light_1/code.html">Game Stats</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md" href="bravehearts_ladies_roster_light/code.html">Roster</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md" href="management_dashboard_light_1/code.html">Booking</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-container-high p-sm transition-all rounded-full">
+<span class="material-symbols-outlined text-on-surface">notifications</span>
+</button>
+<button class="bg-primary text-on-primary px-lg py-sm font-label-caps text-label-caps border-b-4 border-r-4 border-tertiary active:translate-y-1 active:translate-x-1 active:border-0 transition-all">
+                    Tickets
+                </button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[400px] overflow-hidden flex items-end">
+<div class="absolute inset-0 z-0 bg-surface-container-highest">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop pb-xl w-full">
+<span class="bg-primary px-md py-xs font-label-caps text-label-caps text-on-primary mb-md inline-block">Youth Academy</span>
+<h2 class="font-display-lg text-display-lg text-on-surface uppercase leading-none mb-sm">The Boys Team</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Forging the next generation of Malawian champions. Raw energy, elite discipline, and the heart of a lion.</p>
+</div>
+</section>
+<!-- Roster Grid -->
+<section class="px-margin-mobile md:px-margin-desktop py-xl">
+<div class="flex justify-between items-center mb-xl border-l-8 border-primary pl-lg">
+<h3 class="font-headline-lg text-headline-lg uppercase text-on-surface">Active Roster</h3>
+<div class="flex gap-md">
+<span class="flex items-center gap-sm font-label-caps text-label-caps text-secondary">
+<span class="w-3 h-3 bg-secondary rounded-full pulse-live"></span> Live Scouting
+                    </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Player Card 1 -->
+<div class="bg-surface-container-low border border-surface-container-highest group relative overflow-hidden player-card-glow transition-all duration-300">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF4-tYOUmkX7maoUylW4DjbfoMo2d8i7ZENSrox7wOWOgjhjb8rcc-rr-WN6X-LlqIqPnUwwoxqt3I31RGBo-qp_30d-41PTgPKVIujiLZY4N-prwfpUqr6FAAThVqfexyhLw86VKGMHMf8PJUeWlHVv1sGVrAqPvm9FxMW4BkpC_DElJkf4MGcOmPoEH7ZxXFarMO4TqAqoL65m6K9sEIPKVZO4I6PGGX7fVOIPPgR5YdQLaKsbr5pdPAUqeU1b38rjeg2ChGSK_Z"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-md right-md">
+<span class="font-stats-number text-stats-number text-primary drop-shadow-md">23</span>
+</div>
+<div class="absolute bottom-md left-md">
+<h4 class="font-headline-md text-headline-md uppercase leading-none text-on-surface">Chikondi <br/>Banda</h4>
+<p class="font-label-caps text-label-caps text-primary mt-xs">Point Guard</p>
+</div>
+</div>
+<div class="p-md bg-surface border-t border-surface-container-highest">
+<div class="grid grid-cols-3 gap-sm mb-md">
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">18.4</p>
+</div>
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">4.2</p>
+</div>
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">APG</p>
+<p class="font-stats-number text-headline-md text-on-surface">6.8</p>
+</div>
+</div>
+<button class="w-full bg-surface-container-high text-on-surface py-sm font-label-caps text-label-caps border border-outline-variant hover:bg-primary hover:text-on-primary transition-all">View Analytics</button>
+</div>
+</div>
+<!-- Player Card 2 -->
+<div class="bg-surface-container-low border border-surface-container-highest group relative overflow-hidden player-card-glow transition-all duration-300">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgub2iCdXn6mvqK475yixB_75xJGNHJgy8qUH5DKTObJU7dhEJLe38ka0qmL4d_UnBbf38RvW3rOr-5p4u1MtsNJYBsLMivU3Blr9sl_0SSAes9NJIN6WFYdJ2MtVSVOL0rklYBE4NwPMgSzcxvpa4B1gAJAcNE1hGSqw-Equwq7m3j6YLsRfEvg1-2NVg9x_88c2gktWOnz0uvChYcSFdVZ_mvZZFnBy8JJ0NqRbZecznJXBKSjucIjuHTXdOCQ9YaYB4H3dlUkIw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-md right-md">
+<span class="font-stats-number text-stats-number text-primary drop-shadow-md">05</span>
+</div>
+<div class="absolute bottom-md left-md">
+<h4 class="font-headline-md text-headline-md uppercase leading-none text-on-surface">Tiyese <br/>Phiri</h4>
+<p class="font-label-caps text-label-caps text-primary mt-xs">Small Forward</p>
+</div>
+</div>
+<div class="p-md bg-surface border-t border-surface-container-highest">
+<div class="grid grid-cols-3 gap-sm mb-md">
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">14.1</p>
+</div>
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">8.9</p>
+</div>
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">BPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">2.1</p>
+</div>
+</div>
+<button class="w-full bg-surface-container-high text-on-surface py-sm font-label-caps text-label-caps border border-outline-variant hover:bg-primary hover:text-on-primary transition-all">View Analytics</button>
+</div>
+</div>
+<!-- Player Card 3 -->
+<div class="bg-surface-container-low border border-surface-container-highest group relative overflow-hidden player-card-glow transition-all duration-300">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAk7IS57cQ1DeWx1KdugeQmfpqcNMiwa0Tq-AkIn8EtEPcQrJGXFK4UxKOjXJrk-kt94jL8Xmx7Kk8-G6Bb4xEwBTbgTn1teJcnX3nVlYJmcFQePcy5vpB3DyWMP6O_SdkP7mx33v7FO3IdVkD6N3-RP3oyLCeJP-4bgBfMg0pY0CjpiPxB8_l9VibcVVmTdSYkhXlkoySuWin4PE4G2QnZPod6U5frHTimhoHn7VOSU3RMd8a9Cme1TvY4_zWjzz6_lb8wGGXN1Fy"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-md right-md">
+<span class="font-stats-number text-stats-number text-primary drop-shadow-md">11</span>
+</div>
+<div class="absolute bottom-md left-md">
+<h4 class="font-headline-md text-headline-md uppercase leading-none text-on-surface">Mwai <br/>Kachale</h4>
+<p class="font-label-caps text-label-caps text-primary mt-xs">Center</p>
+</div>
+</div>
+<div class="p-md bg-surface border-t border-surface-container-highest">
+<div class="grid grid-cols-3 gap-sm mb-md">
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">11.7</p>
+</div>
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">RPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">12.5</p>
+</div>
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">BPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">3.4</p>
+</div>
+</div>
+<button class="w-full bg-surface-container-high text-on-surface py-sm font-label-caps text-label-caps border border-outline-variant hover:bg-primary hover:text-on-primary transition-all">View Analytics</button>
+</div>
+</div>
+<!-- Player Card 4 -->
+<div class="bg-surface-container-low border border-surface-container-highest group relative overflow-hidden player-card-glow transition-all duration-300">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDq6Jnj70NZpMlp0EudlQw-tDoM7FjpBHDyq2Ie5QtUN2trhSIbyGhL-WDJaLyOB19Rgj_gnyGQ-w9V5QzACF16Yrx0atGihkP2bdvPu-xKBqtdWn1MKwGCFPdwVMJ5Eh-ffYyXN-GDzThun6JYof7cfDdMmvbDzQIT03DiaXwT74s0TnH5MyZG4Nvy_AAA5XA1spL9qZIBCg_Gk0thIlvvw8zvBlTHP1p6Vn-e--BFcl_40lP8RX1vyj44Oo2rXuTZh_L-RKct_sw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute top-md right-md">
+<span class="font-stats-number text-stats-number text-primary drop-shadow-md">45</span>
+</div>
+<div class="absolute bottom-md left-md">
+<h4 class="font-headline-md text-headline-md uppercase leading-none text-on-surface">Kondwani <br/>Nyirenda</h4>
+<p class="font-label-caps text-label-caps text-primary mt-xs">Shooting Guard</p>
+</div>
+</div>
+<div class="p-md bg-surface border-t border-surface-container-highest">
+<div class="grid grid-cols-3 gap-sm mb-md">
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">PPG</p>
+<p class="font-stats-number text-headline-md text-on-surface">16.2</p>
+</div>
+<div class="text-center border-r border-surface-container-highest">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">3P%</p>
+<p class="font-stats-number text-headline-md text-on-surface">42.1</p>
+</div>
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-60 text-[10px]">FT%</p>
+<p class="font-stats-number text-headline-md text-on-surface">88.5</p>
+</div>
+</div>
+<button class="w-full bg-surface-container-high text-on-surface py-sm font-label-caps text-label-caps border border-outline-variant hover:bg-primary hover:text-on-primary transition-all">View Analytics</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Training & Performance Stats -->
+<section class="px-margin-mobile md:px-margin-desktop py-xl bg-surface-container-low">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-xl">
+<!-- Session Booking Card -->
+<div class="lg:col-span-1 bg-primary text-on-primary p-xl relative overflow-hidden shadow-lg">
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<h3 class="font-headline-lg text-headline-md uppercase mb-md">Youth Academy Training</h3>
+<p class="font-body-md text-body-md mb-xl opacity-90">Book private coaching sessions or view the full academy training schedule for the Boys Under-18 squad.</p>
+<div class="space-y-md">
+<button class="w-full bg-on-primary text-primary py-md font-label-caps text-label-caps font-bold hover:bg-surface-container-lowest transition-all">Book Private Session</button>
+<button class="w-full border-2 border-on-primary py-md font-label-caps text-label-caps font-bold hover:bg-on-primary hover:text-primary transition-all">View Full Schedule</button>
+</div>
+</div>
+<!-- Performance Chart Bento -->
+<div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="bg-surface border border-surface-container-highest p-lg shadow-sm">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h4 class="font-label-caps text-label-caps text-primary">Win Rate - Last 10</h4>
+<p class="font-stats-number text-display-lg text-on-surface">80%</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-4xl">trending_up</span>
+</div>
+<div class="h-24 flex items-end gap-1">
+<div class="bg-secondary flex-grow h-[100%]"></div>
+<div class="bg-secondary flex-grow h-[80%]"></div>
+<div class="bg-secondary flex-grow h-[90%]"></div>
+<div class="bg-primary flex-grow h-[40%]"></div>
+<div class="bg-secondary flex-grow h-[100%]"></div>
+<div class="bg-secondary flex-grow h-[85%]"></div>
+<div class="bg-secondary flex-grow h-[95%]"></div>
+<div class="bg-primary flex-grow h-[30%]"></div>
+<div class="bg-secondary flex-grow h-[100%]"></div>
+<div class="bg-secondary flex-grow h-[90%]"></div>
+</div>
+</div>
+<div class="bg-surface border border-surface-container-highest p-lg shadow-sm">
+<h4 class="font-label-caps text-label-caps text-primary mb-md">Key Team Metrics</h4>
+<div class="space-y-md">
+<div class="flex justify-between items-center border-b border-surface-container-highest pb-xs">
+<span class="font-body-md text-body-md text-on-surface">Points Per Game</span>
+<span class="font-stats-number text-headline-md text-on-surface">76.4</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-highest pb-xs">
+<span class="font-body-md text-body-md text-on-surface">Team Rebounds</span>
+<span class="font-stats-number text-headline-md text-on-surface">44.2</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-container-highest pb-xs">
+<span class="font-body-md text-body-md text-on-surface">Avg Assist Rate</span>
+<span class="font-stats-number text-headline-md text-on-surface">19.8</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Roster Table -->
+<section class="px-margin-mobile md:px-margin-desktop py-xl">
+<h3 class="font-headline-md text-headline-md uppercase mb-xl border-b-4 border-primary inline-block text-on-surface">Squad Depth</h3>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="border-b-2 border-primary">
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">No</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">Player</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">Position</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">Height</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">Year</th>
+<th class="text-right py-md px-md font-label-caps text-label-caps text-on-surface-variant uppercase">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<tr class="hover:bg-primary-container/20 transition-colors cursor-pointer group">
+<td class="py-md px-md font-stats-number text-on-surface">23</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded-full overflow-hidden">
+<img alt="Chikondi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgZafYJWsqeNAOpKbyzGEwy_ztZzy12ViaOecFXXauDunl4OxcTpxep1YCnpVPcxize8QzVmMlZzMWjGf5PgaNXE6NwJUk3VrXcIdtmPBti6injmGRYCrMxsfhliLCSZLymglsueyYl19e1w9ik2IYyh9KI8oeVBX44zTc58PEMkUMrN6R--FPRrSrhIg-u8pM0v1EjOsVfaIKi3RUPPUT35QsPneASuek5zLHCGWkuCnTCYH9XgjpaAZVK_OshFjGd3z-oUpxMkBt"/>
+</div>
+<span class="font-body-md font-bold text-on-surface group-hover:text-primary">Chikondi Banda</span>
+</div>
+</td>
+<td class="py-md px-md font-body-md text-on-surface">PG</td>
+<td class="py-md px-md font-body-md text-on-surface">6'1"</td>
+<td class="py-md px-md font-body-md text-on-surface">Junior</td>
+<td class="py-md px-md text-right"><span class="bg-secondary/10 text-secondary px-sm py-xs text-[10px] uppercase font-black border border-secondary/20">Starter</span></td>
+</tr>
+<tr class="hover:bg-primary-container/20 transition-colors cursor-pointer group">
+<td class="py-md px-md font-stats-number text-on-surface">05</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded-full overflow-hidden">
+<img alt="Tiyese" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWDKkM7GQEJ24OhNVMHPp_BoJ6rsgVr0h_IoT2HXkM0ioqmpryoFbcwv8iU8NRIX1aCiKxP43PXo1vrYPHfMfgqPbz_MLEffzX2Yxm3uN1eu1QSaSb2GF1BQPF92NkLl67EQbxnDdx_CQ2iW8m33yJh2Av5F18gEJFjF4uQNQeO3ww-D8md26xn_-ezLeGYtxNLBGGwycq3oqT-3s7xnrmLHft3GKiKFzy3D_8uloImuqDyjRBpGzPtPTKNSqPNMN1Kipx0ZwHd6MS"/>
+</div>
+<span class="font-body-md font-bold text-on-surface group-hover:text-primary">Tiyese Phiri</span>
+</div>
+</td>
+<td class="py-md px-md font-body-md text-on-surface">SF</td>
+<td class="py-md px-md font-body-md text-on-surface">6'5"</td>
+<td class="py-md px-md font-body-md text-on-surface">Senior</td>
+<td class="py-md px-md text-right"><span class="bg-secondary/10 text-secondary px-sm py-xs text-[10px] uppercase font-black border border-secondary/20">Starter</span></td>
+</tr>
+<tr class="hover:bg-primary-container/20 transition-colors cursor-pointer group">
+<td class="py-md px-md font-stats-number text-on-surface">11</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded-full overflow-hidden">
+<img alt="Mwai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC932ylkbtsJYkNx7o9pVv7Vh2ZGKQY1U9eQ7AImSz7LZoJ9H89BvyUlCs2nmLj90Tbj7pNAbRyKLZhZMajFWCD_tnj-73cAP88ot2Ea99HHFKxI7Ac07cNT5iUF4_NC86GLYQckrSmUCf84Vkfs4MWhOxBDd3mP2O6-rZaapBp95JFCczDedoRLAxrTV2kDY_AsIx7Zgs2qNEuxTATsVSmJwZMqJBNSPdTAurYxPVrxoCWMQeLyry4tVGyIBoFPhrNFV270cHeKyrz"/>
+</div>
+<span class="font-body-md font-bold text-on-surface group-hover:text-primary">Mwai Kachale</span>
+</div>
+</td>
+<td class="py-md px-md font-body-md text-on-surface">C</td>
+<td class="py-md px-md font-body-md text-on-surface">6'10"</td>
+<td class="py-md px-md font-body-md text-on-surface">Senior</td>
+<td class="py-md px-md text-right"><span class="bg-secondary/10 text-secondary px-sm py-xs text-[10px] uppercase font-black border border-secondary/20">Starter</span></td>
+</tr>
+<tr class="hover:bg-primary-container/20 transition-colors cursor-pointer group">
+<td class="py-md px-md font-stats-number text-on-surface">02</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded-full overflow-hidden">
+<img alt="Hope" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ2_7jySjhrDc1j1-bTO211TFQFjRyef_Zv98MVY0lGZOCD8XSSIwacWr7TFIXkHjVq-aQzy_Et6rD1qxJWRqs7i209yLdrf2T_vKR5kwi8RyH8kfRcflz373IObFq1rrK1Yl0bhG6entov5Dhb-gtGq77si2FoTuxcvxELqA_t_WhAtYHs8ilEAnc2rmVMS8a682qb-moC4vjzzgAMWkjZeWDqFfXDIc1s-Si7bHnccz1Zh1h5TwmuOP2ebtVHGPF_K-nxUEaIvfx"/>
+</div>
+<span class="font-body-md font-bold text-on-surface group-hover:text-primary">Hope Chirwa</span>
+</div>
+</td>
+<td class="py-md px-md font-body-md text-on-surface">PF</td>
+<td class="py-md px-md font-body-md text-on-surface">6'7"</td>
+<td class="py-md px-md font-body-md text-on-surface">Freshman</td>
+<td class="py-md px-md text-right"><span class="bg-surface-container-highest text-on-surface-variant px-sm py-xs text-[10px] uppercase font-black border border-outline-variant">Bench</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full border-t border-surface-container-highest bg-surface-container-lowest flex flex-col md:flex-row justify-between items-center px-margin-desktop py-xl gap-lg">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-md text-headline-md text-on-surface font-black uppercase"><span class="text-primary">Brave</span>hearts</span>
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Bravehearts Basketball Team. All Rights Reserved.</p>
+</div>
+<div class="flex gap-lg flex-wrap justify-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Contact Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Sponsorship</a>
+</div>
+</footer>
+</main>
+</div>
+<script>
+    // Tab switching logic (simulated)
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (link.innerText.trim() !== 'Boys') {
+                // Logic for other tabs
+            }
+        });
+    });
+
+    // Hover effect for player cards
+    document.querySelectorAll('.player-card-glow').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('border-primary');
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('border-primary');
+        });
+    });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTarget = 'home.html';
+    document.querySelectorAll('button').forEach((button) => {
+      if (button.getAttribute('type') === 'submit') return;
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = button.getAttribute('data-link') || defaultTarget;
+        window.location.href = target;
+      });
+    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-link') || defaultTarget);
+    });
+  });
+</script>
+</body></html>

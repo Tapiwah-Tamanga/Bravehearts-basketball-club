@@ -156,10 +156,10 @@
                 Bravehearts Basketball
             </div>
 <div class="hidden md:flex items-center gap-xl">
-<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps" href="#">Home</a>
-<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Game Stats</a>
-<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Roster</a>
-<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="#">Booking</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps" href="home.html">Home</a>
+<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="game_performance_stats_light_1/code.html">Game Stats</a>
+<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="bravehearts_ladies_roster_light/code.html">Roster</a>
+<a class="text-on-surface hover:text-primary transition-colors font-label-caps text-label-caps" href="management_dashboard_light_1/code.html">Booking</a>
 </div>
 <div class="flex items-center gap-md">
 <div class="hidden lg:flex items-center bg-surface-container-high px-md py-xs rounded-full">
@@ -359,4 +359,20 @@
             }, 1000);
         }
     </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTarget = 'home.html';
+    document.querySelectorAll('button').forEach((button) => {
+      if (button.getAttribute('type') === 'submit') return;
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = button.getAttribute('data-link') || defaultTarget;
+        window.location.href = target;
+      });
+    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-link') || defaultTarget);
+    });
+  });
+</script>
 </body></html>

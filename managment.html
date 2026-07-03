@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravehearts Basketball | Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f5f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d3d4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ce1126;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .7; transform: scale(1.05); }
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#410002",
+                    "secondary-fixed": "#93f9a2",
+                    "surface-container-high": "#ebebeb",
+                    "outline": "#857372",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#ce1126",
+                    "secondary": "#006d2b",
+                    "on-secondary-fixed": "#002109",
+                    "surface-tint": "#c0001f",
+                    "on-background": "#201a1a",
+                    "on-primary-fixed": "#410004",
+                    "on-secondary-fixed-variant": "#005320",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#ffb3ae",
+                    "surface": "#fffbff",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#e2e2e2",
+                    "tertiary": "#5e5e5e",
+                    "surface-bright": "#fffbff",
+                    "on-secondary-container": "#002109",
+                    "outline-variant": "#d8c2bf",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "surface-container-highest": "#e6e1e1",
+                    "surface-container": "#f5f0f0",
+                    "on-surface-variant": "#534342",
+                    "primary-fixed-dim": "#ffb3ae",
+                    "secondary-container": "#c4f0cc",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#f4dddb",
+                    "on-tertiary-container": "#1b1b1b",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#362f2f",
+                    "primary-fixed": "#ffdad7",
+                    "inverse-on-surface": "#fbeeee",
+                    "background": "#fffbff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#ffffff",
+                    "surface-dim": "#e4d7d6",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "primary": "#c0001f",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#77dc88",
+                    "surface-container-low": "#fcf1f0",
+                    "on-surface": "#201a1a",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-primary-fixed-variant": "#930015"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "xs": "4px",
+                    "gutter": "20px",
+                    "xl": "48px",
+                    "margin-desktop": "40px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Montserrat"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Montserrat"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Montserrat"],
+                    "stats-number": ["JetBrains Mono"],
+                    "headline-md": ["Montserrat"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "stats-number": ["32px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-x-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low border-r border-outline-variant z-50 flex flex-col py-xl">
+<div class="px-lg mb-xl">
+<h1 class="font-headline-md text-headline-md font-black text-primary-container">BRAVEHEARTS</h1>
+<div class="mt-md flex items-center gap-sm">
+<img alt="Admin Profile" class="w-10 h-10 rounded bg-primary-container p-0.5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Bg2eviblWyku0_cYdn9i3uKyKeSCZ2T683uK_VzmAeyiGQILb7hHdgaQpMtoWBetk0uH3-v1thdlftwO64RCx8BRiB9KUIjsAtMrA8xnGRR8ccvftN7Tk_GurID8clOb5JxZ20-LCoVXV5AnXa5y1Upd_9Jtv1hNEEWwI-T0yzJiJQgofdhxo-GwlwybLuEtZfxAWbocI2b6isDep0EnG4tpqW14yzqUlIvTD7DmGl0rzKW8-f6fnrpkpmjwZaaytJ4xnixEpYeL"/>
+<div>
+<p class="font-bold text-on-surface">Management</p>
+<p class="text-[12px] text-on-surface-variant opacity-70">Bravehearts HQ</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-xs">
+<a class="bg-primary-container text-on-primary-container border-l-4 border-on-primary px-lg py-md flex items-center gap-md active:scale-98 transition-all" href="code.html">
+<span class="material-symbols-outlined fill-icon">dashboard</span>
+<span class="font-bold">Overview</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant hover:text-primary transition-all" href="../bravehearts_home_light/code.html">
+<span class="material-symbols-outlined">female</span>
+<span class="font-medium">Girls</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant hover:text-primary transition-all" href="../bravehearts_ladies_roster_light/code.html">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-medium">Ladies</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant hover:text-primary transition-all" href="../code.html">
+<span class="material-symbols-outlined">sports_basketball</span>
+<span class="font-medium">Men</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant hover:text-primary transition-all" href="../bravehearts_youth_roster_light_1/code.html">
+<span class="material-symbols-outlined">boy</span>
+<span class="font-medium">Boys</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant hover:text-primary transition-all" href="../bravehearts_youth_roster_light_2/code.html">
+<span class="material-symbols-outlined">child_care</span>
+<span class="font-medium">Youth</span>
+</a>
+</nav>
+<div class="mt-auto px-lg flex flex-col gap-sm">
+<button class="bg-primary text-on-primary font-bold py-md px-lg w-full text-center hover:bg-primary-container active:scale-95 transition-all shadow-lg">
+                Add New Player
+            </button>
+<div class="flex flex-col gap-xs mt-md">
+<a class="text-on-surface-variant flex items-center gap-md px-sm py-xs hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="">Settings</span>
+</a>
+<a class="text-on-surface-variant flex items-center gap-md px-sm py-xs hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-[280px] min-h-screen p-margin-desktop bg-background">
+<!-- Header Actions -->
+<header class="flex justify-between items-end mb-xl">
+<div>
+<p class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-xs">Command Center</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Administrative Overview</h2>
+</div>
+<div class="flex gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant px-md py-sm flex items-center gap-md shadow-sm">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="font-bold text-on-surface">October 2024 Season</span>
+</div>
+<button class="bg-white text-on-surface border-2 border-primary-container px-lg py-sm font-bold flex items-center gap-sm hover:bg-primary-container hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined">download</span>
+                    EXPORT REPORT
+                </button>
+</div>
+</header>
+<!-- Bento Grid Dashboard -->
+<div class="bento-grid">
+<!-- Hero Stats: Player Registrations -->
+<section class="col-span-8 bg-surface-container-lowest border border-outline-variant p-xl relative overflow-hidden shadow-sm">
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-lg">Player Enrollment Flow</h3>
+<div class="flex items-end gap-xl">
+<div>
+<p class="font-stats-number text-display-lg text-primary leading-none">482</p>
+<p class="font-label-caps text-label-caps text-secondary mt-xs font-bold">+12% VS LAST MONTH</p>
+</div>
+<div class="flex-grow h-32 flex items-end gap-xs">
+<div class="w-full bg-surface-container-highest hover:bg-primary transition-colors" style="height: 13.4673%;"></div>
+<div class="w-full bg-surface-container-highest hover:bg-primary transition-colors" style="height: 11.9794%;"></div>
+<div class="w-full bg-surface-container-highest hover:bg-primary transition-colors" style="height: 10%;"></div>
+<div class="w-full bg-surface-container-highest hover:bg-primary transition-colors" style="height: 36.8073%;"></div>
+<div class="w-full bg-surface-container-highest hover:bg-primary transition-colors" style="height: 61.2974%;"></div>
+<div class="w-full bg-primary-container" style="height: 83.3479%;"></div>
+</div>
+</div>
+</div>
+<div class="absolute right-0 top-0 text-surface-container-highest opacity-50 pointer-events-none translate-x-1/4 -translate-y-1/4">
+<span class="material-symbols-outlined text-[240px]">trending_up</span>
+</div>
+</section>
+<!-- Logistics Status Card -->
+<section class="col-span-4 bg-primary-container/5 border-2 border-primary-container p-lg flex flex-col shadow-sm">
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-headline-md text-headline-md leading-tight text-on-surface">Next Game Logistics</h3>
+<div class="bg-primary-container text-on-primary-container px-sm py-xs text-[10px] font-bold status-pulse">LIVE PREP</div>
+</div>
+<div class="space-y-md flex-grow">
+<div class="flex items-center gap-md border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-secondary">directions_bus</span>
+<div>
+<p class="font-bold text-on-surface">Team Transport</p>
+<p class="text-sm text-on-surface-variant">Lilongwe Central Hub - 14:00</p>
+</div>
+</div>
+<div class="flex items-center gap-md border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-secondary">medical_services</span>
+<div>
+<p class="font-bold text-on-surface">Medical Clearance</p>
+<p class="text-sm text-on-surface-variant">24/24 Players Cleared</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+<div>
+<p class="font-bold text-on-surface">Kit Distribution</p>
+<p class="text-sm text-on-surface-variant">Home Reds - Prepared</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-lg bg-on-surface text-surface py-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+                    MANAGE FLEET
+                </button>
+</section>
+<!-- Team Breakdown Table -->
+<section class="col-span-12 bg-surface-container-lowest border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-lg bg-surface-container-highest/50 flex justify-between items-center border-b border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-on-surface">Active Squad Management</h3>
+<div class="flex gap-sm">
+<button class="bg-secondary text-on-secondary px-md py-xs font-bold flex items-center gap-xs hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm">person_add</span>
+<span class="text-xs uppercase">Add Player</span>
+</button>
+<div class="flex border border-outline-variant">
+<input class="bg-surface text-on-surface px-md py-xs focus:ring-2 focus:ring-primary-container border-none w-64 text-sm" placeholder="Search Players..." type="text"/>
+<button class="bg-primary-container p-xs flex items-center justify-center w-10">
+<span class="material-symbols-outlined text-on-primary-container">search</span>
+</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps">
+<th class="p-md">Team Division</th>
+<th class="p-md">Head Coach</th>
+<th class="p-md">Status</th>
+<th class="p-md">Next Fixture</th>
+<th class="p-md">Win Rate</th>
+<th class="p-md text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="p-md flex items-center gap-md">
+<div class="w-8 h-8 bg-primary-container text-on-primary-container flex items-center justify-center font-bold">M</div>
+<span class="font-bold text-on-surface">Men's Senior Elite</span>
+</td>
+<td class="p-md italic text-on-surface-variant">Coach K. Phiri</td>
+<td class="p-md">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-1 text-xs font-bold uppercase">Training</span>
+</td>
+<td class="p-md text-on-surface">Oct 12 vs. Giants</td>
+<td class="p-md font-stats-number text-secondary">88%</td>
+<td class="p-md text-right">
+<button class="text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+<button class="text-error ml-md hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">delete</span>
+</button></td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="p-md flex items-center gap-md">
+<div class="w-8 h-8 bg-primary-container text-on-primary-container flex items-center justify-center font-bold">L</div>
+<span class="font-bold text-on-surface">Ladies' Premier</span>
+</td>
+<td class="p-md italic text-on-surface-variant">Coach M. Banda</td>
+<td class="p-md">
+<span class="bg-primary text-on-primary px-sm py-1 text-xs font-bold uppercase">Gameday</span>
+</td>
+<td class="p-md text-on-surface">Today 18:00</td>
+<td class="p-md font-stats-number text-secondary">92%</td>
+<td class="p-md text-right">
+<button class="text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+<button class="text-error ml-md hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">delete</span>
+</button></td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="p-md flex items-center gap-md">
+<div class="w-8 h-8 bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">Y</div>
+<span class="font-bold text-on-surface">Youth Academy</span>
+</td>
+<td class="p-md italic text-on-surface-variant">Coach J. Chanza</td>
+<td class="p-md">
+<span class="bg-tertiary-container text-on-tertiary-container px-sm py-1 text-xs font-bold uppercase">Rest</span>
+</td>
+<td class="p-md text-on-surface">Oct 15 vs. Tigers</td>
+<td class="p-md font-stats-number text-secondary">64%</td>
+<td class="p-md text-right">
+<button class="text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+<button class="text-error ml-md hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">delete</span>
+</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Quick Control Cards -->
+<section class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
+<div class="flex items-center gap-md mb-md">
+<span class="material-symbols-outlined text-primary-container scale-125">stadium</span>
+<h4 class="font-bold text-on-surface">Facility Booking</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-lg">Manage court time and lighting schedules for all Bravehearts training zones.</p>
+<div class="flex justify-between items-center bg-surface-container border-l-4 border-secondary p-md">
+<div>
+<p class="text-xs font-bold text-secondary uppercase">Court A</p>
+<p class="text-lg font-bold text-on-surface">Available Now</p>
+</div>
+<button class="bg-secondary text-on-secondary px-md py-sm font-bold text-sm shadow-sm">BOOK</button>
+</div>
+</section>
+<section class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
+<div class="flex items-center gap-md mb-md">
+<span class="material-symbols-outlined text-primary-container scale-125">payments</span>
+<h4 class="font-bold text-on-surface">Financial Flux</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-lg">Live monitoring of membership fees and corporate sponsorship intake.</p>
+<div class="space-y-sm">
+<div class="flex justify-between text-xs font-bold mb-1">
+<span class="text-on-surface-variant">MONTHLY TARGET</span>
+<span class="text-secondary">82%</span>
+</div>
+<div class="h-2 bg-surface-container-highest overflow-hidden rounded-full">
+<div class="h-full bg-secondary w-[82%]"></div>
+</div>
+</div>
+</section>
+<section class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
+<div class="flex items-center gap-md mb-md">
+<span class="material-symbols-outlined text-primary-container scale-125">campaign</span>
+<h4 class="font-bold text-on-surface">Team Broadcast</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-lg">Send instant SMS/Push notifications to all players or specific squads.</p>
+<div class="relative">
+<textarea class="w-full bg-surface-container border border-outline-variant text-sm p-md focus:ring-1 focus:ring-primary-container h-24 resize-none text-on-surface" placeholder="Type urgent update..."></textarea>
+<button class="absolute bottom-2 right-2 text-primary-container hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Updated Footer -->
+<footer class="mt-xl flex flex-col md:flex-row justify-between items-center py-xl border-t-4 border-primary-container gap-lg bg-surface-container-high px-margin-desktop">
+<div class="text-left">
+<h4 class="font-headline-md text-headline-md text-primary mb-xs">BRAVEHEARTS</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-80 uppercase tracking-tighter">© 2024 Bravehearts Basketball Team. All Rights Reserved.</p>
+</div>
+<div class="flex gap-lg font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Contact Us</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Sponsorship</a>
+</div>
+</footer>
+</main>
+<!-- Interactive Layer: Tooltip / Toast Placeholder -->
+<div class="fixed bottom-margin-desktop right-margin-desktop transition-all duration-300 bg-primary-container text-on-primary-container px-lg py-md flex items-center gap-md shadow-2xl z-[60] translate-y-full opacity-0" id="toast">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-bold">System Status: Optimal</span>
+</div>
+<script>
+        // Micro-interaction: Toast notification
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-full', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-full', 'opacity-0');
+                }, 3000);
+            }, 1500);
+        });
+
+        // Simulating data updates
+        const updateFlow = () => {
+            const bars = document.querySelectorAll('.flex-grow div[style*="height"]');
+            bars.forEach(bar => {
+                if (bar.classList.contains('bg-primary-container')) return; // Keep the active bar stable or let it change too
+                const currentHeight = parseInt(bar.style.height);
+                const variance = (Math.random() - 0.5) * 5;
+                const nextHeight = Math.min(100, Math.max(10, currentHeight + variance));
+                bar.style.height = `${nextHeight}%`;
+            });
+        }
+        setInterval(updateFlow, 5000);
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTarget = 'home.html';
+    document.querySelectorAll('button').forEach((button) => {
+      if (button.getAttribute('type') === 'submit') return;
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = button.getAttribute('data-link') || defaultTarget;
+        window.location.href = target;
+      });
+    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-link') || defaultTarget);
+    });
+  });
+</script>
+</body></html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bravehearts Basketball | Ladies Roster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration based on {{DATA:DESIGN_SYSTEM:DESIGN_SYSTEM_13}} -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed": "#002109",
+            "surface-container-low": "#f6f3f2",
+            "on-surface-variant": "#5c3f3d",
+            "tertiary": "#725c00",
+            "inverse-on-surface": "#f3f0ef",
+            "on-primary": "#ffffff",
+            "background": "#fcf9f8",
+            "surface-variant": "#e5e2e1",
+            "surface-container-high": "#ebe7e7",
+            "on-error": "#ffffff",
+            "on-primary-fixed-variant": "#930015",
+            "on-surface": "#1c1b1b",
+            "on-error-container": "#93000a",
+            "surface-tint": "#c0001f",
+            "on-primary-container": "#ffe0dd",
+            "on-secondary-fixed-variant": "#005320",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006e2d",
+            "on-primary-fixed": "#410004",
+            "surface-container-highest": "#e5e2e1",
+            "secondary-fixed-dim": "#77dc88",
+            "secondary-container": "#93f9a2",
+            "inverse-surface": "#313030",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#4e3e00",
+            "surface-bright": "#fcf9f8",
+            "secondary-fixed": "#93f9a2",
+            "tertiary-fixed": "#ffe07f",
+            "on-tertiary-fixed": "#231b00",
+            "on-secondary-container": "#007430",
+            "inverse-primary": "#ffb3ae",
+            "primary-container": "#ce1126",
+            "tertiary-container": "#cda800",
+            "surface": "#fcf9f8",
+            "on-secondary": "#ffffff",
+            "outline-variant": "#e6bdba",
+            "primary": "#a30019",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#ffdad7",
+            "surface-dim": "#dcd9d9",
+            "on-background": "#1c1b1b",
+            "outline": "#916f6c",
+            "tertiary-fixed-dim": "#edc200",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#ffb3ae",
+            "on-tertiary-fixed-variant": "#564500",
+            "surface-container": "#f0edec"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "sm": "12px",
+            "xs": "4px",
+            "lg": "48px",
+            "xl": "80px",
+            "base": "8px",
+            "margin": "32px",
+            "md": "24px",
+            "margin-mobile": "16px",
+            "margin-desktop": "40px"
+          },
+          "fontFamily": {
+            "headline-xl": ["Montserrat"],
+            "label-sm": ["Montserrat"],
+            "label-bold": ["Montserrat"],
+            "headline-lg-mobile": ["Montserrat"],
+            "body-md": ["Montserrat"],
+            "headline-lg": ["Montserrat"],
+            "headline-md": ["Montserrat"],
+            "body-lg": ["Montserrat"],
+            "stats-number": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+            "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+            "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "800"}],
+            "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+            "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "stats-number": ["32px", {"lineHeight": "32px", "fontWeight": "700"}],
+            "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #fcf9f8;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #a30019;
+    }
+    .asymmetric-cutout {
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+    }
+    .player-card-shadow {
+      box-shadow: 4px 4px 0px 0px #a30019;
+    }
+    .pulse-live {
+      animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { opacity: 1; background-color: #a30019; }
+      50% { opacity: .7; background-color: #ce1126; }
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden custom-scrollbar">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low border-r border-surface-container-high z-50 hidden md:flex flex-col py-xl">
+<div class="px-lg mb-xl">
+<h2 class="font-headline-md text-headline-md font-black text-primary">Management</h2>
+<p class="font-body-md text-body-md opacity-70">Bravehearts HQ</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">female</span>
+<span class="font-body-md text-body-md">Girls</span>
+</a>
+<a class="bg-primary text-on-primary border-r-4 border-primary px-lg py-md flex items-center gap-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-body-md text-body-md">Ladies</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">sports_basketball</span>
+<span class="font-body-md text-body-md">Men</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">boy</span>
+<span class="font-body-md text-body-md">Boys</span>
+</a>
+<a class="text-on-surface-variant px-lg py-md flex items-center gap-md hover:bg-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">child_care</span>
+<span class="font-body-md text-body-md">Youth</span>
+</a>
+</nav>
+<div class="px-lg mt-auto border-t border-surface-container-high pt-xl space-y-md">
+<button class="w-full bg-primary text-on-primary font-label-bold text-label-bold py-md flex items-center justify-center gap-sm hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span> Add New Player
+      </button>
+<div class="flex flex-col gap-xs">
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm uppercase">Settings</span>
+</a>
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm uppercase">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="md:ml-[280px] min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface-container-lowest border-b border-surface-container-high z-40">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-full mx-auto">
+<div class="flex items-center gap-md">
+<h1 class="font-headline-md text-headline-md font-black text-primary uppercase tracking-tighter">Bravehearts Basketball</h1>
+</div>
+<div class="hidden lg:flex items-center gap-xl">
+<nav class="flex gap-lg">
+<a class="text-on-surface hover:text-primary transition-colors font-body-md font-semibold" href="../home.html">Home</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md font-semibold" href="../game_performance_stats_light_1/code.html">Game Stats</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md" href="../ladies_roster_light/code.html">Roster</a>
+<a class="text-on-surface hover:text-primary transition-colors font-body-md font-semibold" href="../management_dashboard_light_1/code.html">Booking</a>
+</nav>
+<div class="flex items-center gap-md">
+<div class="relative">
+<input class="bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-md py-xs text-sm w-48 transition-all focus:w-64" placeholder="Search roster..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1 text-on-surface-variant">search</span>
+</div>
+<button class="p-sm text-on-surface hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary text-on-primary font-label-bold text-label-bold px-lg py-sm hover:brightness-110 transition-all uppercase">
+              Tickets
+            </button>
+</div>
+</div>
+<button class="lg:hidden p-sm text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 px-margin-mobile md:px-margin-desktop py-xl">
+<!-- Hero Section / Title -->
+<div class="mb-xl">
+<div class="flex items-center gap-sm mb-xs">
+<span class="w-12 h-[2px] bg-primary"></span>
+<span class="font-label-bold text-label-sm text-primary uppercase">Elite Division</span>
+</div>
+<h2 class="font-display-lg text-headline-lg md:text-display-lg font-black uppercase text-on-surface leading-none mb-md">Ladies Roster</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary pl-lg">
+          Powered by raw athleticism and strategic brilliance. The Ladies division of Bravehearts represents the pinnacle of professional basketball in Malawi.
+        </p>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+<div class="md:col-span-2 bg-surface-container-lowest border border-surface-container-high p-lg flex flex-col justify-between player-card-shadow">
+<div class="flex justify-between items-start">
+<h3 class="font-label-bold text-label-sm text-primary uppercase">Team Win Rate</h3>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="mt-xl flex items-baseline gap-sm">
+<span class="font-stats-number text-display-lg text-on-surface leading-none">88</span>
+<span class="text-headline-md font-stats-number text-secondary">%</span>
+</div>
+<p class="font-body-md text-on-surface-variant mt-sm">Highest in the national league this season.</p>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-high p-lg flex flex-col justify-between">
+<h3 class="font-label-bold text-label-sm text-on-surface-variant uppercase">Total Points</h3>
+<div class="mt-xl">
+<span class="font-stats-number text-headline-xl text-on-surface">1,420</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-primary p-lg flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-[120px] text-primary" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<h3 class="font-label-bold text-label-sm text-primary uppercase">Training Hours</h3>
+<div class="mt-xl">
+<span class="font-stats-number text-headline-xl text-on-surface">480+</span>
+</div>
+</div>
+</div>
+<!-- Roster Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg">
+<!-- Player Card 1 -->
+<div class="group relative bg-surface-container-lowest border border-surface-container-high hover:border-primary transition-all duration-300">
+<div class="relative h-[400px] overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoXq22ruyb_RpFc3S0Vyy_eTblJyySrersBvpmCM_ydUL4fGq2TrG-N_3WwuUvzRc0DQfXoqD8153W_MoCLnm3_7_O8RBWwZPI7Do_IDoRwo1l2FR3RPnL3194i5FZRMTVSJFqAW6yunsT95P_ZpFlB170Ap6D-gpCA0Ht6D14sIPaUJZ2qbZsNzav-AQP2FzIc16k_WWSwZeQK_QqUcyh1quUBq704Kvpu1mXg8gm1eJWzfCLuiMxfGDt11lkKmlWEr0k3ryrS3Y0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute top-md left-md">
+<span class="bg-primary text-on-primary font-stats-number text-headline-md px-sm py-xs">07</span>
+</div>
+<div class="absolute bottom-md left-md right-md">
+<h3 class="font-headline-md text-headline-md font-black uppercase text-on-surface">Tiwonge Nyirenda</h3>
+<p class="font-label-bold text-label-sm text-primary tracking-[0.2em] uppercase">Point Guard</p>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-surface-container-high flex justify-between items-center">
+<div class="flex gap-lg">
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">PPG</p>
+<p class="font-stats-number text-body-lg text-on-surface">22.4</p>
+</div>
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">APG</p>
+<p class="font-stats-number text-body-lg text-on-surface">8.1</p>
+</div>
+</div>
+<button class="bg-surface-variant p-sm hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-md">analytics</span>
+</button>
+</div>
+</div>
+<!-- Player Card 2 -->
+<div class="group relative bg-surface-container-lowest border border-surface-container-high hover:border-primary transition-all duration-300">
+<div class="relative h-[400px] overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4QOS7TB05YNyW-Rm72XM8_EVPxELOWEYsoh-XaIk3HezGP0JndWbU0OkLZZwNqH13kOyYGsxHUrpyJjn39l2t1GqZxGWJnyz9AgIqjtR9ViM8fwELD6UbGVaa8JfeWiC412Uvoq_n4W5BmHyRZ2G9E2-22ZFjI93wat-wv5nPX64dSep4DEYOVRTYgp4idMkqTEbmNLIXRIrf2Tcku3aIdsv2WYvMWdSgFOrVEB9NPg5TKvnWBC8o_AhZnA2Q83INNL_doIQgbjM2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute top-md left-md">
+<span class="bg-primary text-on-primary font-stats-number text-headline-md px-sm py-xs">15</span>
+</div>
+<div class="absolute bottom-md left-md right-md">
+<h3 class="font-headline-md text-headline-md font-black uppercase text-on-surface">Lumbani Banda</h3>
+<p class="font-label-bold text-label-sm text-primary tracking-[0.2em] uppercase">Center</p>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-surface-container-high flex justify-between items-center">
+<div class="flex gap-lg">
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">RPG</p>
+<p class="font-stats-number text-body-lg text-on-surface">14.2</p>
+</div>
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">BPG</p>
+<p class="font-stats-number text-body-lg text-on-surface">3.5</p>
+</div>
+</div>
+<button class="bg-surface-variant p-sm hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-md">analytics</span>
+</button>
+</div>
+</div>
+<!-- Player Card 3 -->
+<div class="group relative bg-surface-container-lowest border border-surface-container-high hover:border-primary transition-all duration-300">
+<div class="relative h-[400px] overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARy3cmjW89Uq7w0lRAEPpdvpyyVssTSSsWZZcGDnAOH0ZLPsu8R5QjOI632MuldRywjjxRF0Y5zT-IW4RybzjohNUPpg9atS9p8z2t5kur9LtGfwqmhH9aBcI281z3tBSDDHgazkyPam6iEl3HaXrnOdNSmU-0tnAsH1aLHg8vOFpQO9RiUkXkzdwNxpG7eUPxMXtlkt5bnKG1gF99OA5_M0k8VybrqypKfJco4mkpRC9iimXt1RX7Y6eB43a7y1lt8AKLPaqNy3Rq"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute top-md left-md">
+<span class="bg-primary text-on-primary font-stats-number text-headline-md px-sm py-xs">23</span>
+</div>
+<div class="absolute bottom-md left-md right-md">
+<h3 class="font-headline-md text-headline-md font-black uppercase text-on-surface">Zuwena Phiri</h3>
+<p class="font-label-bold text-label-sm text-primary tracking-[0.2em] uppercase">Small Forward</p>
+</div>
+</div>
+<div class="p-md bg-surface-container-low border-t border-surface-container-high flex justify-between items-center">
+<div class="flex gap-lg">
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">PPG</p>
+<p class="font-stats-number text-body-lg text-on-surface">19.8</p>
+</div>
+<div class="text-center">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">FG%</p>
+<p class="font-stats-number text-body-lg text-on-surface">52.4</p>
+</div>
+</div>
+<button class="bg-surface-variant p-sm hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-md">analytics</span>
+</button>
+</div>
+</div>
+<!-- Player Card 4 (Add Player Placeholder) -->
+<div class="group relative bg-surface-container-low border-2 border-dashed border-surface-container-high hover:border-primary transition-all duration-300 flex flex-col items-center justify-center min-h-[464px] cursor-pointer">
+<div class="w-20 h-20 rounded-full border-2 border-surface-container-high group-hover:border-primary flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-headline-xl text-surface-container-high group-hover:text-primary transition-all">add</span>
+</div>
+<p class="font-label-bold text-label-sm text-on-surface-variant mt-lg uppercase group-hover:text-on-surface transition-all">Draft New Player</p>
+</div>
+</div>
+<!-- Live Performance Analysis -->
+<section class="mt-xl">
+<div class="bg-surface-container-lowest border border-surface-container-high p-xl relative">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-lg mb-xl">
+<div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="w-3 h-3 rounded-full pulse-live"></span>
+<span class="font-label-bold text-label-sm text-primary uppercase">Live Analytics</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-black uppercase">Season Performance Curve</h3>
+</div>
+<div class="flex gap-md">
+<button class="border-2 border-primary px-lg py-sm font-label-bold text-label-sm text-primary hover:bg-primary hover:text-on-primary transition-all uppercase">Download Report</button>
+<button class="bg-secondary text-on-secondary px-lg py-sm font-label-bold text-label-sm hover:brightness-110 transition-all uppercase">Detailed Stats</button>
+</div>
+</div>
+<div class="w-full h-64 bg-surface-container-low border border-surface-container-high relative flex items-end p-md overflow-hidden">
+<!-- Simulated Dynamic Graph -->
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 256">
+<path d="M0,256 L100,200 L200,220 L300,150 L400,180 L500,100 L600,120 L700,50 L800,80 L900,20 L1000,60 L1000,256 Z" fill="url(#grad1)"></path>
+<path d="M0,256 L100,200 L200,220 L300,150 L400,180 L500,100 L600,120 L700,50 L800,80 L900,20 L1000,60" fill="none" stroke="#a30019" stroke-width="4"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#a30019;stop-opacity:0.5"></stop>
+<stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex-1 flex justify-between items-end h-full z-10 px-lg">
+<div class="w-1 bg-primary h-1/4"></div>
+<div class="w-1 bg-primary h-2/4"></div>
+<div class="w-1 bg-primary h-1/3"></div>
+<div class="w-1 bg-primary h-3/4"></div>
+<div class="w-1 bg-primary h-1/2"></div>
+<div class="w-1 bg-primary h-full"></div>
+<div class="w-1 bg-primary h-2/3"></div>
+<div class="w-1 bg-primary h-5/6"></div>
+<div class="w-1 bg-primary h-1/3"></div>
+<div class="w-1 bg-primary h-3/4"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-lg">
+<div class="p-md bg-surface-container-low border-l-4 border-primary">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">Offensive Rating</p>
+<p class="font-stats-number text-headline-md text-on-surface">112.4</p>
+</div>
+<div class="p-md bg-surface-container-low border-l-4 border-secondary">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">Defensive Rating</p>
+<p class="font-stats-number text-headline-md text-on-surface">94.8</p>
+</div>
+<div class="p-md bg-surface-container-low border-l-4 border-primary">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">Net Rating</p>
+<p class="font-stats-number text-headline-md text-on-surface">+17.6</p>
+</div>
+<div class="p-md bg-surface-container-low border-l-4 border-primary">
+<p class="font-label-bold text-[10px] text-on-surface-variant uppercase">Pace</p>
+<p class="font-stats-number text-headline-md text-on-surface">102.1</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full border-t border-surface-container-high bg-surface-container-lowest mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-xl gap-lg max-w-full mx-auto">
+<div class="flex items-center gap-md">
+<h2 class="font-headline-md text-headline-md text-primary font-black uppercase tracking-tighter">Bravehearts</h2>
+<p class="font-label-bold text-label-sm text-on-surface-variant">© 2024 Bravehearts Basketball Team. All Rights Reserved.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-lg">
+<a class="font-label-bold text-label-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-label-bold text-label-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-label-bold text-label-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Contact Us</a>
+<a class="font-label-bold text-label-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Sponsorship</a>
+</nav>
+</div>
+</footer>
+</main>
+<script>
+    // Micro-interactions for the cards
+    document.querySelectorAll('.group').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-4px)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+      });
+    });
+  </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTarget = 'home.html';
+    document.querySelectorAll('button').forEach((button) => {
+      if (button.getAttribute('type') === 'submit') return;
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = button.getAttribute('data-link') || defaultTarget;
+        window.location.href = target;
+      });
+    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-link') || defaultTarget);
+    });
+  });
+</script>
+</body></html>
