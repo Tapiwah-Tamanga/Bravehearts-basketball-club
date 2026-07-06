@@ -2,6 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from 'cors';
 import userRoutes from "./routes/user.route.js";
+import teamRoutes from "./routes/team.route.js";
+import playerRoutes from "./routes/player.route.js";
+import gameRoutes from "./routes/game.route.js";
+import eventRoutes from "./routes/event.route.js";
+import statRoutes from "./routes/stat.route.js";
+import dashboardRoutes from "./routes/dashboard.route.js";
 import { sequelize } from "./config/db.config.js";
 import path from 'path';
 
@@ -30,9 +36,16 @@ app.use(cors({
 }));
 app.use(express.urlencoded({ extended: true }));
 
+//Routes
 // app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use("/api/users", userRoutes);
+app.use("/api/teams", teamRoutes);
+app.use("/api/players", playerRoutes);
+app.use("/api/games", gameRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/stats", statRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 
 
