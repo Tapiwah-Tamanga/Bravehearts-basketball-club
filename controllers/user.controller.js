@@ -46,10 +46,10 @@ export const createUser = async (req, res) => {
 
   // Send welcome email
     await transporter.sendMail({
-      from: `"MyBuddy" <${process.env.EMAIL_FROM}>`,
+      from: `"BraveHearts" <${process.env.EMAIL_FROM}>`,
       to: user.email,
-      subject: "Welcome to MyBuddy!",
-      html: `<p>Hello <strong>${user.name}</strong>, welcome to MyBuddy!</p>`,
+      subject: "Welcome to BraveHearts Basketball Club!",
+      html: `<p>Hello <strong>${user.name}</strong>, welcome to BraveHearts!</p>`,
     });
 
   return res.status(201).json({
