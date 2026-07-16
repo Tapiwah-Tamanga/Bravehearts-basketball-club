@@ -7,50 +7,72 @@ const Player = sequelize.define("Player", {
     autoIncrement: true,
     primaryKey: true,
   },
+
   fullName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
   jerseyNumber: {
     type: DataTypes.INTEGER,
   },
+
   position: {
     type: DataTypes.STRING,
   },
+
+  team: {
+    type: DataTypes.ENUM(
+      "Ladies",
+      "Men",
+      "Girls",
+      "Boys",
+      "Youth"
+    ),
+    allowNull: false,
+  },
+
   age: {
     type: DataTypes.INTEGER,
   },
+
   height: {
     type: DataTypes.FLOAT,
   },
+
   photo: {
     type: DataTypes.STRING,
   },
+
   marketValue: {
     type: DataTypes.DECIMAL(10, 2),
     defaultValue: 0,
   },
-   points: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  assists: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  rebounds: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  steals: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
-  blocks: {
+
+  points: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
 
+  assists: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+
+  rebounds: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+
+  steals: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+
+  blocks: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 export default Player;

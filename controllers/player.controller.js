@@ -1,5 +1,5 @@
 import Player from "../models/player.model.js";
-
+import Team from "../models/team.model.js";
 export const createPlayer = async (req, res) => {
   try {
     const player = await Player.create(req.body);
@@ -33,6 +33,68 @@ export const getAllPlayers = async (req, res) => {
       count: players.length,
       data: players,
     });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getPlayersByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    const players = await Player.findAll({
+      include: [
+        {
+          model: Team,
+          where: { category },
+          attributes: ["id", "name", "category"],
+        },
+      ],
+      order: [["jerseyNumber", "ASC"]],
+    });
+
+    const totalPlayers = players.length;
+
+    const totalPoints = players.reduce(
+      (sum, player) => sum + (player.points || 0),
+      0
+    );
+
+    const totalAssists = players.reduce(
+      (sum, player) => sum + (player.assists || 0),
+      0
+    );
+
+    const totalRebounds = players.reduce(
+      (sum, player) => sum + (player.rebounds || 0),
+      0
+    );
+
+    const totalSteals = players.reduce(
+      (sum, player) => sum + (player.steals || 0),
+      0
+    );
+
+    const totalBlocks = players.reduce(
+      (sum, player) => sum + (player.blocks || 0),
+      0
+    );
+
+    res.status(200).json({
+      success: true,
+      category,
+      totalPlayers,
+      totalPoints,
+      totalAssists,
+      totalRebounds,
+      totalSteals,
+      totalBlocks,
+      players,
+    });
+
   } catch (error) {
     res.status(500).json({
       success: false,
