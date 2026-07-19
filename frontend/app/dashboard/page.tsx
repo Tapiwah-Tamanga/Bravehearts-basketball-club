@@ -5,28 +5,27 @@ import { players, games, teams, getWinRate } from "@/lib/mock-data";
 export default function DashboardPage() {
   const winRate = getWinRate();
   const totalPlayers = players.length;
-  const recentGames = games.slice(0, 3);
 
   return (
     <div>
       {/* Header Actions */}
-      <header className="flex justify-between items-end mb-xl">
+      <header className="flex justify-between items-end mb-12">
         <div>
-          <p className="font-headline text-label-caps text-secondary uppercase tracking-widest mb-xs">
+          <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Command Center
           </p>
-          <h2 className="font-headline text-headline-lg text-on-surface">
+          <h2 className="font-headline text-4xl text-on-surface">
             Administrative Overview
           </h2>
         </div>
-        <div className="flex gap-md">
-          <div className="bg-surface-container-lowest border border-outline-variant px-md py-sm flex items-center gap-md shadow-sm">
+        <div className="flex gap-4">
+          <div className="bg-surface-container-lowest border border-outline-variant px-4 py-2 flex items-center gap-4 shadow-sm">
             <span className="material-symbols-outlined text-primary">
               calendar_today
             </span>
             <span className="font-bold text-on-surface">2026 Season</span>
           </div>
-          <button className="bg-white text-on-surface border-2 border-primary-container px-lg py-sm font-bold flex items-center gap-sm hover:bg-primary-container hover:text-on-primary transition-all shadow-sm">
+          <button className="bg-white text-on-surface border-2 border-primary-container px-6 py-2 font-bold flex items-center gap-2 hover:bg-primary-container hover:text-on-primary transition-all shadow-sm">
             <span className="material-symbols-outlined">download</span>
             EXPORT REPORT
           </button>
@@ -36,21 +35,21 @@ export default function DashboardPage() {
       {/* Bento Grid Dashboard */}
       <div className="bento-grid">
         {/* Hero Stats: Player Registrations */}
-        <section className="col-span-12 md:col-span-8 bg-surface-container-lowest border border-outline-variant p-xl relative overflow-hidden shadow-sm">
+        <section className="col-span-12 md:col-span-8 bg-surface-container-lowest border border-outline-variant p-12 relative overflow-hidden shadow-sm">
           <div className="relative z-10">
-            <h3 className="font-headline text-headline-md mb-lg">
+            <h3 className="font-headline text-2xl mb-6">
               Player Enrollment Flow
             </h3>
-            <div className="flex items-end gap-xl">
+            <div className="flex items-end gap-12">
               <div>
-                <p className="font-stats text-display-lg text-primary leading-none">
+                <p className="font-stats text-7xl text-primary leading-none">
                   {totalPlayers}
                 </p>
-                <p className="font-headline text-label-caps text-secondary mt-xs font-bold">
+                <p className="font-headline text-xs text-secondary mt-1 font-bold">
                   +12% VS LAST MONTH
                 </p>
               </div>
-              <div className="flex-grow h-32 flex items-end gap-xs">
+              <div className="flex-grow h-32 flex items-end gap-1">
                 {[13, 12, 10, 37, 61, 83].map((h, i) => (
                   <div
                     key={i}
@@ -73,17 +72,17 @@ export default function DashboardPage() {
         </section>
 
         {/* Logistics Status Card */}
-        <section className="col-span-12 md:col-span-4 bg-primary-container/5 border-2 border-primary-container p-lg flex flex-col shadow-sm">
-          <div className="flex justify-between items-start mb-md">
-            <h3 className="font-headline text-headline-md leading-tight text-on-surface">
+        <section className="col-span-12 md:col-span-4 bg-primary-container/5 border-2 border-primary-container p-6 flex flex-col shadow-sm">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="font-headline text-2xl leading-tight text-on-surface">
               Next Game Logistics
             </h3>
-            <div className="bg-primary-container text-on-primary-container px-sm py-xs text-[10px] font-bold pulse-red">
+            <div className="bg-primary-container text-on-primary-container px-2 py-1 text-[10px] font-bold pulse-red">
               LIVE PREP
             </div>
           </div>
-          <div className="space-y-md flex-grow">
-            <div className="flex items-center gap-md border-b border-outline-variant pb-sm">
+          <div className="space-y-4 flex-grow">
+            <div className="flex items-center gap-4 border-b border-outline-variant pb-2">
               <span className="material-symbols-outlined text-secondary">
                 directions_bus
               </span>
@@ -94,7 +93,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-md border-b border-outline-variant pb-sm">
+            <div className="flex items-center gap-4 border-b border-outline-variant pb-2">
               <span className="material-symbols-outlined text-secondary">
                 medical_services
               </span>
@@ -105,7 +104,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-md">
+            <div className="flex items-center gap-4">
               <span className="material-symbols-outlined text-secondary">
                 inventory_2
               </span>
@@ -117,27 +116,27 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-          <button className="w-full mt-lg bg-on-surface text-surface py-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+          <button className="w-full mt-6 bg-on-surface text-surface py-2 font-bold hover:bg-primary hover:text-on-primary transition-colors">
             MANAGE FLEET
           </button>
         </section>
 
         {/* Team Breakdown Table */}
         <section className="col-span-12 bg-surface-container-lowest border border-outline-variant overflow-hidden shadow-sm">
-          <div className="p-lg bg-surface-container-highest/50 flex justify-between items-center border-b border-outline-variant">
-            <h3 className="font-headline text-headline-md text-on-surface">
+          <div className="p-6 bg-surface-container-highest/50 flex justify-between items-center border-b border-outline-variant">
+            <h3 className="font-headline text-2xl text-on-surface">
               Active Squad Management
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-headline text-label-caps">
-                  <th className="p-md">Team Division</th>
-                  <th className="p-md">Head Coach</th>
-                  <th className="p-md">Status</th>
-                  <th className="p-md">Win Rate</th>
-                  <th className="p-md text-right">Action</th>
+                <tr className="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-headline text-xs">
+                  <th className="p-4">Team Division</th>
+                  <th className="p-4">Head Coach</th>
+                  <th className="p-4">Status</th>
+                  <th className="p-4">Win Rate</th>
+                  <th className="p-4 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant">
@@ -146,7 +145,7 @@ export default function DashboardPage() {
                     key={team.id}
                     className="hover:bg-primary/5 transition-colors group"
                   >
-                    <td className="p-md flex items-center gap-md">
+                    <td className="p-4 flex items-center gap-4">
                       <div className="w-8 h-8 bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
                         {team.category[0]}
                       </div>
@@ -154,18 +153,18 @@ export default function DashboardPage() {
                         {team.name}
                       </span>
                     </td>
-                    <td className="p-md italic text-on-surface-variant">
+                    <td className="p-4 italic text-on-surface-variant">
                       {team.coach}
                     </td>
-                    <td className="p-md">
-                      <span className="bg-secondary-container text-on-secondary-container px-sm py-1 text-xs font-bold uppercase">
+                    <td className="p-4">
+                      <span className="bg-secondary-container text-on-secondary-container px-2 py-1 text-xs font-bold uppercase">
                         Active
                       </span>
                     </td>
-                    <td className="p-md font-stats text-secondary">
+                    <td className="p-4 font-stats text-secondary">
                       {winRate}%
                     </td>
-                    <td className="p-md text-right">
+                    <td className="p-4 text-right">
                       <button className="text-primary hover:scale-110 transition-transform">
                         <span className="material-symbols-outlined">
                           edit_note
@@ -180,18 +179,18 @@ export default function DashboardPage() {
         </section>
 
         {/* Quick Control Cards */}
-        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
-          <div className="flex items-center gap-md mb-md">
+        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-6 group hover:border-primary-container transition-all shadow-sm">
+          <div className="flex items-center gap-4 mb-4">
             <span className="material-symbols-outlined text-primary-container scale-125">
               stadium
             </span>
             <h4 className="font-bold text-on-surface">Facility Booking</h4>
           </div>
-          <p className="text-sm text-on-surface-variant mb-lg">
+          <p className="text-sm text-on-surface-variant mb-6">
             Manage court time and lighting schedules for all Bravehearts
             training zones.
           </p>
-          <div className="flex justify-between items-center bg-surface-container border-l-4 border-secondary p-md">
+          <div className="flex justify-between items-center bg-surface-container border-l-4 border-secondary p-4">
             <div>
               <p className="text-xs font-bold text-secondary uppercase">
                 Court A
@@ -200,24 +199,24 @@ export default function DashboardPage() {
                 Available Now
               </p>
             </div>
-            <button className="bg-secondary text-on-secondary px-md py-sm font-bold text-sm shadow-sm">
+            <button className="bg-secondary text-on-secondary px-4 py-2 font-bold text-sm shadow-sm">
               BOOK
             </button>
           </div>
         </section>
 
-        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
-          <div className="flex items-center gap-md mb-md">
+        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-6 group hover:border-primary-container transition-all shadow-sm">
+          <div className="flex items-center gap-4 mb-4">
             <span className="material-symbols-outlined text-primary-container scale-125">
               payments
             </span>
             <h4 className="font-bold text-on-surface">Financial Flux</h4>
           </div>
-          <p className="text-sm text-on-surface-variant mb-lg">
+          <p className="text-sm text-on-surface-variant mb-6">
             Live monitoring of membership fees and corporate sponsorship
             intake.
           </p>
-          <div className="space-y-sm">
+          <div className="space-y-2">
             <div className="flex justify-between text-xs font-bold mb-1">
               <span className="text-on-surface-variant">
                 MONTHLY TARGET
@@ -230,20 +229,20 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-lg group hover:border-primary-container transition-all shadow-sm">
-          <div className="flex items-center gap-md mb-md">
+        <section className="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant p-6 group hover:border-primary-container transition-all shadow-sm">
+          <div className="flex items-center gap-4 mb-4">
             <span className="material-symbols-outlined text-primary-container scale-125">
               campaign
             </span>
             <h4 className="font-bold text-on-surface">Team Broadcast</h4>
           </div>
-          <p className="text-sm text-on-surface-variant mb-lg">
+          <p className="text-sm text-on-surface-variant mb-6">
             Send instant SMS/Push notifications to all players or specific
             squads.
           </p>
           <div className="relative">
             <textarea
-              className="w-full bg-surface-container border border-outline-variant text-sm p-md focus:ring-1 focus:ring-primary-container h-24 resize-none text-on-surface"
+              className="w-full bg-surface-container border border-outline-variant text-sm p-4 focus:ring-1 focus:ring-primary-container h-24 resize-none text-on-surface"
               placeholder="Type urgent update..."
             />
             <button className="absolute bottom-2 right-2 text-primary-container hover:scale-110 transition-transform">

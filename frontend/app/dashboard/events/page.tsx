@@ -21,12 +21,12 @@ export default function EventsPage() {
   return (
     <div>
       {/* Header */}
-      <header className="flex justify-between items-end mb-xl">
+      <header className="flex justify-between items-end mb-12">
         <div>
-          <p className="font-headline text-label-caps text-secondary uppercase tracking-widest mb-xs">
+          <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Event Management
           </p>
-          <h2 className="font-headline text-headline-lg text-on-surface">
+          <h2 className="font-headline text-4xl text-on-surface">
             Upcoming Events
           </h2>
         </div>
@@ -35,7 +35,7 @@ export default function EventsPage() {
             setEditingEvent(null);
             setShowForm(true);
           }}
-          className="bg-primary text-on-primary px-lg py-sm font-headline text-label-caps hover:bg-opacity-90 transition-all shadow-md flex items-center gap-sm"
+          className="bg-primary text-on-primary px-6 py-2 font-headline text-xs hover:bg-opacity-90 transition-all shadow-md flex items-center gap-2"
         >
           <span className="material-symbols-outlined text-sm">event</span>
           ADD EVENT
@@ -43,7 +43,7 @@ export default function EventsPage() {
       </header>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {eventList.map((event, i) => (
           <div
             key={event.id}
@@ -57,14 +57,14 @@ export default function EventsPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-md left-md right-md">
-                <h3 className="font-headline text-headline-md font-black uppercase text-white">
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="font-headline text-2xl font-black uppercase text-white">
                   {event.title}
                 </h3>
               </div>
             </div>
-            <div className="p-md">
-              <div className="flex items-center gap-md mb-sm text-on-surface-variant text-sm">
+            <div className="p-4">
+              <div className="flex items-center gap-4 mb-2 text-on-surface-variant text-sm">
                 <span className="material-symbols-outlined text-primary text-lg">
                   calendar_today
                 </span>
@@ -77,25 +77,25 @@ export default function EventsPage() {
                   })}
                 </span>
               </div>
-              <div className="flex items-center gap-md mb-md text-on-surface-variant text-sm">
+              <div className="flex items-center gap-4 mb-4 text-on-surface-variant text-sm">
                 <span className="material-symbols-outlined text-primary text-lg">
                   location_on
                 </span>
                 <span className="font-body">{event.location}</span>
               </div>
-              <p className="font-body text-sm text-on-surface-variant mb-md line-clamp-2">
+              <p className="font-body text-sm text-on-surface-variant mb-4 line-clamp-2">
                 {event.description}
               </p>
-              <div className="flex gap-sm">
+              <div className="flex gap-2">
                 <button
                   onClick={() => handleEdit(event)}
-                  className="flex-1 border border-outline-variant py-sm font-headline text-label-caps text-on-surface hover:bg-surface-container-high transition-all"
+                  className="flex-1 border border-outline-variant py-2 font-headline text-xs text-on-surface hover:bg-surface-container-high transition-all"
                 >
                   EDIT
                 </button>
                 <button
                   onClick={() => handleDelete(event.id)}
-                  className="flex-1 border border-error/30 py-sm font-headline text-label-caps text-error hover:bg-error/5 transition-all"
+                  className="flex-1 border border-error/30 py-2 font-headline text-xs text-error hover:bg-error/5 transition-all"
                 >
                   DELETE
                 </button>
@@ -108,9 +108,9 @@ export default function EventsPage() {
       {/* Modal Form */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
-          <div className="bg-surface-container-lowest border border-outline-variant p-xl w-full max-w-lg shadow-2xl">
-            <div className="flex justify-between items-center mb-lg">
-              <h3 className="font-headline text-headline-md text-on-surface">
+          <div className="bg-surface-container-lowest border border-outline-variant p-12 w-full max-w-lg shadow-2xl">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-headline text-2xl text-on-surface">
                 {editingEvent ? "Edit Event" : "Add New Event"}
               </h3>
               <button
@@ -125,40 +125,40 @@ export default function EventsPage() {
                 e.preventDefault();
                 setShowForm(false);
               }}
-              className="space-y-md"
+              className="space-y-4"
             >
               <div>
-                <label className="font-headline text-label-caps text-on-surface-variant block mb-xs">
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
                   Event Title
                 </label>
                 <input
                   type="text"
                   defaultValue={editingEvent?.title || ""}
-                  className="w-full bg-surface border border-outline-variant px-md py-sm text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
               </div>
               <div>
-                <label className="font-headline text-label-caps text-on-surface-variant block mb-xs">
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
                   Description
                 </label>
                 <textarea
                   defaultValue={editingEvent?.description || ""}
-                  className="w-full bg-surface border border-outline-variant px-md py-sm text-sm focus:ring-2 focus:ring-primary-container font-body h-24 resize-none"
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body h-24 resize-none"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-md">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="font-headline text-label-caps text-on-surface-variant block mb-xs">
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Location
                   </label>
                   <input
                     type="text"
                     defaultValue={editingEvent?.location || ""}
-                    className="w-full bg-surface border border-outline-variant px-md py-sm text-sm focus:ring-2 focus:ring-primary-container font-body"
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
                 </div>
                 <div>
-                  <label className="font-headline text-label-caps text-on-surface-variant block mb-xs">
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Event Date
                   </label>
                   <input
@@ -170,21 +170,21 @@ export default function EventsPage() {
                             .slice(0, 16)
                         : ""
                     }
-                    className="w-full bg-surface border border-outline-variant px-md py-sm text-sm focus:ring-2 focus:ring-primary-container font-body"
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
                 </div>
               </div>
-              <div className="flex gap-md pt-md">
+              <div className="flex gap-4 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="flex-1 border-2 border-outline-variant py-md font-headline text-label-caps text-on-surface hover:bg-surface-container-high transition-all"
+                  className="flex-1 border-2 border-outline-variant py-4 font-headline text-xs text-on-surface hover:bg-surface-container-high transition-all"
                 >
                   CANCEL
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-primary text-on-primary py-md font-headline text-label-caps hover:bg-opacity-90 transition-all shadow-md"
+                  className="flex-1 bg-primary text-on-primary py-4 font-headline text-xs hover:bg-opacity-90 transition-all shadow-md"
                 >
                   {editingEvent ? "UPDATE EVENT" : "ADD EVENT"}
                 </button>

@@ -158,6 +158,10 @@ export const players: Player[] = [
     rebounds: 52,
     steals: 68,
     blocks: 8,
+    year: "Junior",
+    status: "Starter",
+    threePointPct: 36.8,
+    freeThrowPct: 85.2,
   },
   {
     id: 8,
@@ -174,6 +178,10 @@ export const players: Player[] = [
     rebounds: 188,
     steals: 42,
     blocks: 32,
+    year: "Senior",
+    status: "Starter",
+    threePointPct: 31.5,
+    freeThrowPct: 78.9,
   },
   {
     id: 9,
@@ -190,6 +198,30 @@ export const players: Player[] = [
     rebounds: 62,
     steals: 58,
     blocks: 14,
+    year: "Sophomore",
+    status: "Bench",
+    threePointPct: 33.2,
+    freeThrowPct: 80.5,
+  },
+  {
+    id: 18,
+    fullName: "Nelia Chirwa",
+    jerseyNumber: 8,
+    position: "C",
+    team: "Girls",
+    age: 18,
+    height: 191,
+    photo: "https://lh3.googleusercontent.com/aida-public/AB6AXuC4QOS7TB05YNyW-Rm72XM8_EVPxELOWEYsoh-XaIk3HezGP0JndWbU0OkLZZwNqH13kOyYGsxHUrpyJjn39l2t1GqZxGWJnyz9AgIqjtR9ViM8fwELD6UbGVaa8JfeWiC412Uvoq_n4W5BmHyRZ2G9E2-22ZFjI93wat-wv5nPX64dSep4DEYOVRTYgp4idMkqTEbmNLIXRIrf2Tcku3aIdsv2WYvMWdSgFOrVEB9NPg5TKvnWBC8o_AhZnA2Q83INNL_doIQgbjM2",
+    marketValue: 7000,
+    points: 258,
+    assists: 36,
+    rebounds: 296,
+    steals: 24,
+    blocks: 62,
+    year: "Sophomore",
+    status: "Starter",
+    threePointPct: 24.0,
+    freeThrowPct: 72.8,
   },
   // Boys
   {
@@ -207,6 +239,10 @@ export const players: Player[] = [
     rebounds: 68,
     steals: 52,
     blocks: 14,
+    year: "Sophomore",
+    status: "Starter",
+    threePointPct: 38.5,
+    freeThrowPct: 82.1,
   },
   {
     id: 11,
@@ -223,6 +259,10 @@ export const players: Player[] = [
     rebounds: 134,
     steals: 38,
     blocks: 32,
+    year: "Junior",
+    status: "Starter",
+    threePointPct: 34.2,
+    freeThrowPct: 75.8,
   },
   {
     id: 12,
@@ -239,6 +279,50 @@ export const players: Player[] = [
     rebounds: 200,
     steals: 24,
     blocks: 54,
+    year: "Senior",
+    status: "Starter",
+    threePointPct: 28.5,
+    freeThrowPct: 68.2,
+  },
+  {
+    id: 16,
+    fullName: "Kondwani Nyirenda",
+    jerseyNumber: 45,
+    position: "SG",
+    team: "Boys",
+    age: 17,
+    height: 183,
+    photo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBF4-tYOUmkX7maoUylW4DjbfoMo2d8i7ZENSrox7wOWOgjhjb8rcc-rr-WN6X-LlqIqPnUwwoxqt3I31RGBo-qp_30d-41PTgPKVIujiLZY4N-prwfpUqr6FAAThVqfexyhLw86VKGMHMf8PJUeWlHVv1sGVrAqPvm9FxMW4BkpC_DElJkf4MGcOmPoEH7ZxXFarMO4TqAqoL65m6K9sEIPKVZO4I6PGGX7fVOIPPgR5YdQLaKsbr5pdPAUqeU1b38rjeg2ChGSK_Z",
+    marketValue: 8500,
+    points: 324,
+    assists: 84,
+    rebounds: 92,
+    steals: 48,
+    blocks: 18,
+    year: "Sophomore",
+    status: "Starter",
+    threePointPct: 42.1,
+    freeThrowPct: 88.5,
+  },
+  {
+    id: 17,
+    fullName: "Hope Chirwa",
+    jerseyNumber: 2,
+    position: "PF",
+    team: "Boys",
+    age: 16,
+    height: 201,
+    photo: "https://lh3.googleusercontent.com/aida-public/AB6AXuAgub2iCdXn6mvqK475yixB_75xJGNHJgy8qUH5DKTObJU7dhEJLe38ka0qmL4d_UnBbf38RvW3rOr-5p4u1MtsNJYBsLMivU3Blr9sl_0SSAes9NJIN6WFYdJ2MtVSVOL0rklYBE4NwPMgSzcxvpa4B1gAJAcNE1hGSqw-Equwq7m3j6YLsRfEvg1-2NVg9x_88c2gktWOnz0uvChYcSFdVZ_mvZZFnBy8JJ0NqRbZecznJXBKSjucIjuHTXdOCQ9YaYB4H3dlUkIw",
+    marketValue: 6500,
+    points: 156,
+    assists: 28,
+    rebounds: 142,
+    steals: 22,
+    blocks: 38,
+    year: "Freshman",
+    status: "Bench",
+    threePointPct: 22.0,
+    freeThrowPct: 71.5,
   },
   // Youth
   {
@@ -435,4 +519,29 @@ export function getPlayersByTeamCount(team: string): number {
   return players.filter(
     (p) => p.team.toLowerCase() === team.toLowerCase()
   ).length;
+}
+
+export function getTeamMetrics(team: string) {
+  const teamPlayers = getPlayersByTeam(team);
+  const totalPoints = teamPlayers.reduce((sum, p) => sum + p.points, 0);
+  const totalRebounds = teamPlayers.reduce((sum, p) => sum + p.rebounds, 0);
+  const totalAssists = teamPlayers.reduce((sum, p) => sum + p.assists, 0);
+  const gamesPlayed = 20;
+
+  return {
+    pointsPerGame: (totalPoints / gamesPlayed).toFixed(1),
+    teamRebounds: (totalRebounds / gamesPlayed).toFixed(1),
+    avgAssistRate: (totalAssists / gamesPlayed).toFixed(1),
+  };
+}
+
+export function getTrainingStats(team: string) {
+  const stats: Record<string, { winRate: number; trainingHours: number; totalPoints: number; offensiveRating: number; defensiveRating: number }> = {
+    ladies: { winRate: 88, trainingHours: 480, totalPoints: 1420, offensiveRating: 112.4, defensiveRating: 94.8 },
+    men: { winRate: 85, trainingHours: 520, totalPoints: 1380, offensiveRating: 108.6, defensiveRating: 96.2 },
+    girls: { winRate: 82, trainingHours: 360, totalPoints: 1180, offensiveRating: 102.3, defensiveRating: 98.5 },
+    boys: { winRate: 80, trainingHours: 340, totalPoints: 1120, offensiveRating: 98.7, defensiveRating: 101.2 },
+    youth: { winRate: 75, trainingHours: 280, totalPoints: 960, offensiveRating: 92.4, defensiveRating: 104.8 },
+  };
+  return stats[team.toLowerCase()] || stats.youth;
 }

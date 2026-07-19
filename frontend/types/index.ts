@@ -4,6 +4,10 @@ export type GameResult = "WIN" | "LOSS" | "DRAW";
 
 export type Position = "PG" | "SG" | "SF" | "PF" | "C";
 
+export type PlayerStatus = "Starter" | "Bench" | "Reserve";
+
+export type PlayerYear = "Freshman" | "Sophomore" | "Junior" | "Senior";
+
 export interface Player {
   id: number;
   fullName: string;
@@ -19,6 +23,10 @@ export interface Player {
   rebounds: number;
   steals: number;
   blocks: number;
+  year?: PlayerYear;
+  status?: PlayerStatus;
+  threePointPct?: number;
+  freeThrowPct?: number;
 }
 
 export interface Game {
