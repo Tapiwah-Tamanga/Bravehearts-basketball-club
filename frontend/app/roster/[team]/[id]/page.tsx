@@ -46,6 +46,8 @@ export default function PlayerDetailPage() {
   const spg = (player.steals / 20).toFixed(1);
   const bpg = (player.blocks / 20).toFixed(1);
 
+  const teamColorClass = `team-${teamSlug}`;
+
   const statBars = [
     { label: "Points", value: player.points, max: 600, color: "bg-primary" },
     { label: "Assists", value: player.assists, max: 250, color: "bg-secondary" },
@@ -60,13 +62,19 @@ export default function PlayerDetailPage() {
     .slice(0, 4);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className={`flex flex-col min-h-screen ${teamColorClass}`}>
       <TopNavBar />
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="bg-surface-container-highest relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 md:px-10 py-8 md:py-16">
+        <section className="bg-surface-container-highest relative overflow-hidden noise-overlay">
+          {/* Diagonal accent */}
+          <div 
+            className="absolute top-0 right-0 w-1/3 h-full opacity-10 transform skew-x-12"
+            style={{ background: `var(--team-accent)` }}
+          />
+          
+          <div className="max-w-7xl mx-auto px-4 md:px-10 py-8 md:py-16 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Player Image */}
               <div className="relative">
@@ -78,20 +86,36 @@ export default function PlayerDetailPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
-                    <span className="font-stats text-6xl md:text-8xl text-white drop-shadow-lg">
+                    <span 
+                      className="font-stats text-6xl md:text-8xl text-white drop-shadow-lg"
+                      style={{ textShadow: `0 0 40px var(--team-accent)` }}
+                    >
                       {String(player.jerseyNumber).padStart(2, "0")}
+                    </span>
+                  </div>
+                  {/* Position badge */}
+                  <div className="absolute top-4 left-4">
+                    <span 
+                      className="px-3 py-1.5 text-sm font-headline font-bold uppercase tracking-wider text-white"
+                      style={{ background: `var(--team-accent)` }}
+                    >
+                      {player.position}
                     </span>
                   </div>
                 </div>
                 {/* Decorative element */}
-                <div className="absolute -bottom-4 -right-4 w-32 h-32 border-t-8 border-r-8 border-primary opacity-30 hidden md:block" />
+                <div 
+                  className="absolute -bottom-4 -right-4 w-32 h-32 border-t-8 border-r-8 opacity-30 hidden md:block"
+                  style={{ borderColor: `var(--team-accent)` }}
+                />
               </div>
 
               {/* Player Info */}
               <div>
                 <Link
                   href={`/roster/${teamSlug}`}
-                  className="inline-flex items-center gap-1 font-headline text-xs text-primary mb-4 hover:underline"
+                  className="inline-flex items-center gap-1 font-headline text-xs mb-4 hover:underline transition-colors"
+                  style={{ color: `var(--team-accent)` }}
                 >
                   <span className="material-symbols-outlined text-sm">
                     arrow_back
@@ -99,17 +123,26 @@ export default function PlayerDetailPage() {
                   Back to {team?.name || "Roster"}
                 </Link>
 
-                <div className="bg-primary text-on-primary px-4 py-1 font-headline text-xs mb-4 inline-block">
+                <div 
+                  className="text-white px-4 py-1.5 font-headline text-xs mb-4 inline-block uppercase tracking-widest"
+                  style={{ background: `var(--team-accent)` }}
+                >
                   {player.position} — {player.team}
                 </div>
 
                 <h1 className="font-headline text-3xl md:text-5xl font-black uppercase leading-none mb-2">
                   {player.fullName.split(" ").slice(0, -1).join(" ")}
                   <br />
-                  <span className="text-primary">
+                  <span style={{ color: `var(--team-accent)` }}>
                     {player.fullName.split(" ").slice(-1)}
                   </span>
                 </h1>
+
+                {player.year && (
+                  <p className="font-body text-sm text-on-surface-variant mt-2">
+                    {player.year} • {player.status || "Active"}
+                  </p>
+                )}
 
                 <div className="flex flex-wrap gap-4 md:gap-6 mt-6 mb-8">
                   <div>
@@ -130,7 +163,7 @@ export default function PlayerDetailPage() {
                     <p className="font-headline text-[10px] text-on-surface-variant uppercase tracking-widest">
                       Market Value
                     </p>
-                    <p className="font-stats text-xl font-bold text-secondary">
+                    <p className="font-stats text-xl font-bold" style={{ color: `var(--team-accent)` }}>
                       MWK {player.marketValue.toLocaleString()}
                     </p>
                   </div>
@@ -147,7 +180,7 @@ export default function PlayerDetailPage() {
                   ].map((stat) => (
                     <div
                       key={stat.label}
-                      className="bg-surface-container p-2 md:p-3 text-center border border-outline-variant"
+                      className="bg-surface-container p-2 md:p-3 text-center border border-outline-variant hover:border-current transition-colors duration-300"
                     >
                       <p className="font-headline text-[8px] md:text-[10px] text-on-surface-variant uppercase">
                         {stat.label}
@@ -158,6 +191,32 @@ export default function PlayerDetailPage() {
                     </div>
                   ))}
                 </div>
+
+                {/* Shooting Percentages */}
+                {(player.threePointPct !== undefined || player.freeThrowPct !== undefined) && (
+                  <div className="mt-6 flex gap-6">
+                    {player.threePointPct !== undefined && (
+                      <div>
+                        <p className="font-headline text-[10px] text-on-surface-variant uppercase tracking-widest">
+                          3-Point %
+                        </p>
+                        <p className="font-stats text-2xl font-bold" style={{ color: `var(--team-accent)` }}>
+                          {player.threePointPct}%
+                        </p>
+                      </div>
+                    )}
+                    {player.freeThrowPct !== undefined && (
+                      <div>
+                        <p className="font-headline text-[10px] text-on-surface-variant uppercase tracking-widest">
+                          Free Throw %
+                        </p>
+                        <p className="font-stats text-2xl font-bold" style={{ color: `var(--team-accent)` }}>
+                          {player.freeThrowPct}%
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -165,8 +224,8 @@ export default function PlayerDetailPage() {
 
         {/* Season Stats */}
         <section className="py-8 md:py-12 px-4 md:px-10 max-w-7xl mx-auto">
-          <div className="border-l-8 border-primary pl-4 md:pl-6 mb-6 md:mb-8">
-            <p className="font-headline text-xs text-primary font-bold uppercase tracking-widest">
+          <div className="border-l-8 pl-4 md:pl-6 mb-6 md:mb-8" style={{ borderColor: `var(--team-accent)` }}>
+            <p className="font-headline text-xs font-bold uppercase tracking-widest" style={{ color: `var(--team-accent)` }}>
               Season 2026
             </p>
             <h2 className="font-headline text-2xl md:text-3xl uppercase text-on-surface">
@@ -187,11 +246,12 @@ export default function PlayerDetailPage() {
                       {stat.value}
                     </span>
                   </div>
-                  <div className="h-3 bg-surface-container-highest overflow-hidden">
+                  <div className="stat-bar">
                     <div
-                      className={`h-full ${stat.color} transition-all duration-1000`}
+                      className="stat-bar-fill"
                       style={{
                         width: `${Math.min((stat.value / stat.max) * 100, 100)}%`,
+                        background: `var(--team-accent)`,
                       }}
                     />
                   </div>
@@ -205,11 +265,11 @@ export default function PlayerDetailPage() {
                 Season Summary
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-surface-container p-4 border-l-4 border-primary">
+                <div className="bg-surface-container p-4 border-l-4" style={{ borderColor: `var(--team-accent)` }}>
                   <p className="font-headline text-[10px] text-on-surface-variant uppercase">
                     Total Points
                   </p>
-                  <p className="font-stats text-2xl font-bold text-primary">
+                  <p className="font-stats text-2xl font-bold" style={{ color: `var(--team-accent)` }}>
                     {player.points}
                   </p>
                 </div>
@@ -221,11 +281,11 @@ export default function PlayerDetailPage() {
                     {player.assists}
                   </p>
                 </div>
-                <div className="bg-surface-container p-4 border-l-4 border-primary">
+                <div className="bg-surface-container p-4 border-l-4" style={{ borderColor: `var(--team-accent)` }}>
                   <p className="font-headline text-[10px] text-on-surface-variant uppercase">
                     Total Rebounds
                   </p>
-                  <p className="font-stats text-2xl font-bold text-primary">
+                  <p className="font-stats text-2xl font-bold" style={{ color: `var(--team-accent)` }}>
                     {player.rebounds}
                   </p>
                 </div>
@@ -236,6 +296,27 @@ export default function PlayerDetailPage() {
                   <p className="font-stats text-2xl font-bold text-secondary">
                     20
                   </p>
+                </div>
+              </div>
+
+              {/* Additional Stats */}
+              <div className="mt-6 pt-6 border-t border-outline-variant">
+                <h4 className="font-headline text-xs font-bold uppercase mb-4 text-on-surface-variant">
+                  Per Game Averages
+                </h4>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="font-stats text-lg" style={{ color: `var(--team-accent)` }}>{ppg}</p>
+                    <p className="font-headline text-[10px] text-on-surface-variant uppercase">PPG</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="font-stats text-lg" style={{ color: `var(--team-accent)` }}>{rpg}</p>
+                    <p className="font-headline text-[10px] text-on-surface-variant uppercase">RPG</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="font-stats text-lg" style={{ color: `var(--team-accent)` }}>{apg}</p>
+                    <p className="font-headline text-[10px] text-on-surface-variant uppercase">APG</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -260,13 +341,13 @@ export default function PlayerDetailPage() {
                   <Link
                     key={tm.id}
                     href={`/roster/${teamSlug}/${tm.id}`}
-                    className="bg-surface-container-lowest border border-outline-variant overflow-hidden group hover:border-primary transition-all"
+                    className="bg-surface-container-lowest border border-outline-variant overflow-hidden group hover:border-current transition-all duration-300"
                   >
                     <div className="aspect-[3/4] relative overflow-hidden bg-surface-container-high">
                       <img
                         src={tm.photo}
                         alt={tm.fullName}
-                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       <div className="absolute bottom-2 left-2">
