@@ -21,7 +21,7 @@ export default function HomePage() {
             <img
               alt="Bravehearts Court Action"
               className="w-full h-full object-cover opacity-60"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvr1t-kll6bFAu9ii8GGDM_WZ8El3VlRCbf-ZFnguQ9mw-AX5Ek6dd46hDeh6DNcYi2xvyXtyTZ_h82wDIvXLDKGX5SZ5fvDkCxB-eZuvEJyvtTexTqHaY_Rc84or_LMsHcXycAkbRNp9df_7obPSnTHzUE_QMK3nsnQoqR5kcQN3UDQgm_CehEs7tn4iBaRRA1FmvwI7XKGesUhMgyOuHK2t3O6Ii2xYdPYivDhJUGyO5Cd9VdTaadCq8A7MXv1iTZQksFeKbyOm-"
+              src="/BH/BH Player.jpg"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function HomePage() {
               <img
                 alt="Championship Win"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxroOf9bRB-HlVHLyXBWi7TddAp3FjvoNRwemib5QX5d4x-X_haQhf5HcNWJjP4VQXC-c8MtXzltvan2wgFp5bBQ-ftadAiuDxKEquvR61LfNPCoCLO9x-C30jGOLNiYh2TxWJch7V83x3Ml2hoEyZuQhluntqBm0NelnIXC25I7Z5-NMn4AMnhMCdWq4G8BEPeSO2NRyjXYmB9Zi2gz5MmceCH2ySx5sh6jjwSuT4AcQ67MTjMePYgjzVp3LvJ2jeY2cLjS9kQ9Lm"
+                src="/BH/BH Player-22.jpg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 md:p-12">
@@ -204,7 +204,7 @@ export default function HomePage() {
               <img
                 alt="Player Profiles"
                 className="w-full h-36 md:h-48 object-cover mb-3 md:mb-4 shadow-inner"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu3_QFsajDQ0KPmaihP7VvFuhSKcxVjRHym7vjhBlLpwAaPQ7EWHQZO9VV7OJbQqsl5q1MfiqFEPxCGv7D55An1S1CBkbFgHrl67caWzdgHcwC_zaS7bmdPTJzpSGUVt9rI3hvJEfo6fAahzFjOL4Brx6Wz6ES1dfsoq0R7RNMy88PlFVFylwQnoLdM7Y3_QEI8wrscuP_WScw0lgYz6g5XPOXyZXCw1k9ZXV1AW1jUYJ1VdSEAbnXWtyDt-CdXcTK_W8A_ASSX3Bn"
+                src="/BH/BH Player-23.jpg"
               />
               <h4 className="font-headline text-lg md:text-2xl mb-1 uppercase text-on-surface">
                 Roster Spotlight
