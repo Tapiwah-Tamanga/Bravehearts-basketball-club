@@ -20,8 +20,8 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/70 to-transparent z-10" />
             <img
               alt="Bravehearts Court Action"
-              className="w-full h-full object-cover opacity-60"
-              src="/BH/BH Player.jpg"
+              className="w-full h-full object-cover opacity-100"
+              src="/BH/BH Player-459.jpg"
             />
           </div>
 
