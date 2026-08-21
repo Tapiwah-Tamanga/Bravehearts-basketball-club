@@ -40,10 +40,13 @@ export default function TopNavBar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-headline text-lg md:text-2xl font-black text-primary uppercase tracking-tighter hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           aria-label="Bravehearts Basketball Home"
         >
-          Bravehearts Basketball
+          <img src="/teams/logo.png" alt="Bravehearts Logo" className="h-10 w-10 object-contain" />
+          <span className="font-headline text-lg md:text-2xl font-black text-primary uppercase tracking-tighter">
+            Bravehearts Basketball
+          </span>
         </Link>
 
         {/* Desktop Nav */}

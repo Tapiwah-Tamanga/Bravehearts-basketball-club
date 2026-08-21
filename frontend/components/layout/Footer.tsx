@@ -14,8 +14,11 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-4 md:px-10 py-8 md:py-12 max-w-7xl mx-auto">
         {/* Brand */}
         <div className="flex flex-col gap-2 items-center md:items-start">
-          <div className="font-headline text-xl md:text-2xl text-primary font-black uppercase tracking-tighter">
-            Bravehearts
+          <div className="flex items-center gap-2">
+            <img src="/teams/logo.png" alt="Bravehearts Logo" className="h-12 w-12 object-contain" />
+            <span className="font-headline text-xl md:text-2xl text-primary font-black uppercase tracking-tighter">
+              Bravehearts
+            </span>
           </div>
           <p className="font-headline text-[10px] md:text-xs text-on-surface-variant text-center md:text-left">
             © 2026 Bravehearts Basketball Team. All Rights Reserved.

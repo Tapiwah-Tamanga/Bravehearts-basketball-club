@@ -133,7 +133,7 @@ export default function HomePage() {
               <img
                 alt="Championship Win"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
-                src="/BH/BH Player-22.jpg"
+                src="/teams/girls/group photo.jpg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 md:p-12">
@@ -204,7 +204,7 @@ export default function HomePage() {
               <img
                 alt="Player Profiles"
                 className="w-full h-36 md:h-48 object-cover mb-3 md:mb-4 shadow-inner"
-                src="/BH/BH Player-23.jpg"
+                src="/teams/ladies/group photo.jpg"
               />
               <h4 className="font-headline text-lg md:text-2xl mb-1 uppercase text-on-surface">
                 Roster Spotlight
