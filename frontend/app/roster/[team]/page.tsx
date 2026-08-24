@@ -155,13 +155,29 @@ export default function RosterPage() {
   const isLadiesTeam = teamSlug === "ladies";
   const isGirlsTeam = teamSlug === "girls";
 
+  const teamPhotos: Record<string, string> = {
+    ladies: "/teams/ladies/group photo.jpg",
+    men: "/teams/mens/group photo.jpg",
+    girls: "/teams/girls/group photo.jpg",
+    boys: "/teams/boys/group photo.jpg",
+    youth: "/teams/girls/group photo.jpg",
+  };
+
+  const teamPhoto = teamPhotos[teamSlug] || "/teams/mens/group photo.jpg";
+
   return (
     <div className="flex flex-col min-h-screen">
       <TopNavBar />
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative min-h-[300px] md:h-[400px] flex items-end bg-surface-container-highest noise-overlay">
+        <section className="relative min-h-[300px] md:h-[400px] flex items-end bg-surface-container-highest noise-overlay overflow-hidden">
+          {/* Group Photo Background */}
+          <img
+            src={teamPhoto}
+            alt={`${team?.name} Group Photo`}
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+          />
           {/* Diagonal accent */}
           <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 transform skew-x-12 bg-primary" />
           
