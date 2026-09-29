@@ -28,6 +28,23 @@ const Team = sequelize.define("Team", {
   description: {
     type: DataTypes.TEXT,
   },
+  // ponytail: display-only fields the nav/roster UI already renders
+  icon: {
+    type: DataTypes.STRING,
+  },
+  color: {
+    type: DataTypes.STRING,
+  },
+  groupPhoto: {
+    type: DataTypes.STRING,
+  },
+  badge: {
+    type: DataTypes.STRING,
+  },
+  status: {
+    type: DataTypes.ENUM("Active", "Inactive"),
+    defaultValue: "Active",
+  },
 });
 
 export default Team;

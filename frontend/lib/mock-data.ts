@@ -1080,21 +1080,55 @@ export function getTeamByCategory(category: string): Team | undefined {
 export function getUpcomingGames(): Game[] {
   const now = new Date();
   return games
-    .filter((g) => new Date(g.gameDate) > now)
+    .filter((g) => g.status === "upcoming" || (!g.status && new Date(g.gameDate) > now))
     .sort(
       (a, b) =>
         new Date(a.gameDate).getTime() - new Date(b.gameDate).getTime()
     );
 }
 
+export function getLiveGame(): Game | undefined {
+  return (
+    games.find((g) => g.status === "live" || g.isLive) ||
+    getUpcomingGames()[0] ||
+    getRecentGames()[0]
+  );
+}
+
+export function getUpcomingGame(): Game | undefined {
+  return getUpcomingGames()[0];
+}
+
 export function getRecentGames(): Game[] {
   const now = new Date();
   return games
-    .filter((g) => new Date(g.gameDate) <= now)
+    .filter((g) => g.status === "finished" || (!g.status && new Date(g.gameDate) <= now))
     .sort(
       (a, b) =>
         new Date(b.gameDate).getTime() - new Date(a.gameDate).getTime()
     );
+}
+
+// ponytail: single source for per-game averages — replaces hardcoded /20 across pages
+export function gamesPlayedOf(p: { gamesPlayed?: number }): number {
+  return p.gamesPlayed && p.gamesPlayed > 0 ? p.gamesPlayed : 20;
+}
+
+export function perGame(total: number, p: { gamesPlayed?: number }): string {
+  return (total / gamesPlayedOf(p)).toFixed(1);
+}
+
+export function formatHeight(cm: number): string {
+  const totalInches = cm / 2.54;
+  const feet = Math.floor(totalInches / 12);
+  const inches = Math.round(totalInches % 12);
+  return `${feet}'${inches}"`;
+}
+
+export function splitName(fullName: string): { first: string; last: string } {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length < 2) return { first: "", last: parts[0] || "" };
+  return { first: parts.slice(0, -1).join(" "), last: parts.slice(-1)[0] };
 }
 
 export function getWinRate(): number {
@@ -1119,7 +1153,6 @@ export function getTeamMetrics(team: string) {
   const totalRebounds = teamPlayers.reduce((sum, p) => sum + p.rebounds, 0);
   const totalAssists = teamPlayers.reduce((sum, p) => sum + p.assists, 0);
   const gamesPlayed = 20;
-
   return {
     pointsPerGame: (totalPoints / gamesPlayed).toFixed(1),
     teamRebounds: (totalRebounds / gamesPlayed).toFixed(1),

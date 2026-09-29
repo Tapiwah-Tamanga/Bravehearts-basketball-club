@@ -73,6 +73,25 @@ const Player = sequelize.define("Player", {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
+
+  // ponytail: fields the roster/detail UI already reads; TeamId FK (via association) is truth, `team` ENUM kept for compat
+  year: {
+    type: DataTypes.ENUM("Freshman", "Sophomore", "Junior", "Senior"),
+  },
+  status: {
+    type: DataTypes.ENUM("Starter", "Bench", "Reserve"),
+    defaultValue: "Bench",
+  },
+  threePointPct: {
+    type: DataTypes.FLOAT,
+  },
+  freeThrowPct: {
+    type: DataTypes.FLOAT,
+  },
+  gamesPlayed: {
+    type: DataTypes.INTEGER,
+    defaultValue: 20,
+  },
 });
 
 export default Player;

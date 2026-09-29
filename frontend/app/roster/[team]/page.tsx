@@ -10,8 +10,12 @@ import {
   getTeamByCategory,
   getWinRate,
   getRecentGames,
+  getUpcomingGame,
   getTeamMetrics,
   getTrainingStats,
+  perGame,
+  formatHeight,
+  splitName,
 } from "@/lib/mock-data";
 import type { Player, Position } from "@/types";
 
@@ -28,9 +32,10 @@ function PlayerCard({
   teamSlug: string;
   isGirlsTeam?: boolean;
 }) {
-  const ppg = (player.points / 20).toFixed(1);
-  const rpg = (player.rebounds / 20).toFixed(1);
-  const apg = (player.assists / 20).toFixed(1);
+  const ppg = perGame(player.points, player);
+  const rpg = perGame(player.rebounds, player);
+  const apg = perGame(player.assists, player);
+  const { first, last } = splitName(player.fullName);
 
   return (
     <Link
@@ -66,10 +71,10 @@ function PlayerCard({
         {/* Player name overlay */}
         <div className="absolute bottom-4 left-4 right-4">
           <h4 className="font-headline text-2xl uppercase leading-none text-on-surface drop-shadow-md">
-            {player.fullName.split(" ").slice(0, -1).join(" ")}
+            {first}
             <br />
             <span className="text-primary">
-              {player.fullName.split(" ").slice(-1)}
+              {last}
             </span>
           </h4>
           {player.year && (
@@ -136,7 +141,7 @@ export default function RosterPage() {
   const team = getTeamByCategory(teamSlug);
   const winRate = getWinRate();
   const recentGames = getRecentGames();
-  const nextGame = recentGames[0];
+  const nextGame = getUpcomingGame() ?? recentGames[0];
   const teamMetrics = getTeamMetrics(teamSlug);
   const trainingStats = getTrainingStats(teamSlug);
 
@@ -451,7 +456,7 @@ export default function RosterPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 font-headline text-sm text-on-surface-variant">
-                      {(player.height / 30.48).toFixed(0)}&apos;{(player.height % 30.48 / 2.54).toFixed(0)}&quot;
+                      {formatHeight(player.height)}
                     </td>
                     <td className="px-4 py-3 font-headline text-sm text-on-surface-variant">{player.year || "N/A"}</td>
                     <td className="px-4 py-3">

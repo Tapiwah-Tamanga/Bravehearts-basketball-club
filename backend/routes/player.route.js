@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.post("/", createPlayer);
 router.get("/", getAllPlayers);
-router.get("/:id", getPlayerById);
 router.get("/team/:category", getPlayersByCategory);
+router.get("/:id", getPlayerById);
 router.put("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
 

@@ -27,6 +27,7 @@ export interface Player {
   status?: PlayerStatus;
   threePointPct?: number;
   freeThrowPct?: number;
+  gamesPlayed?: number; // ponytail: replaces hardcoded /20 divisor
 }
 
 export interface Game {
@@ -37,6 +38,23 @@ export interface Game {
   scoreFor: number;
   scoreAgainst: number;
   result: GameResult;
+  // ponytail: mirrors backend live/ticketing fields; all optional until live
+  season?: string;
+  status?: "upcoming" | "live" | "finished";
+  quarter?: string;
+  clock?: string;
+  q1?: number;
+  q2?: number;
+  q3?: number;
+  q4?: number;
+  fouls?: number;
+  timeouts?: number;
+  fgPct?: number;
+  threePct?: number;
+  ftPct?: number;
+  turnovers?: number;
+  streamUrl?: string;
+  isLive?: boolean;
 }
 
 export interface Event {
@@ -54,6 +72,11 @@ export interface Team {
   category: TeamCategory;
   coach: string;
   description: string;
+  icon?: string;
+  color?: string;
+  groupPhoto?: string;
+  badge?: string;
+  status?: "Active" | "Inactive";
 }
 
 export interface PlayerStats {

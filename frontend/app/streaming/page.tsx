@@ -2,13 +2,17 @@
 
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { games, players } from "@/lib/mock-data";
+import { getLiveGame, players } from "@/lib/mock-data";
 import Link from "next/link";
 
 export default function StreamingPage() {
-  const liveGame = games[0];
+  const liveGame = getLiveGame()!;
   const bhPlayers = players.filter((p) => p.team === "Men").slice(0, 5);
-  const oppPlayers = players.filter((p) => p.team === "Ladies").slice(0, 5);
+  // ponytail: opponent roster isn't ours — don't masquerade Ladies as opponents
+  const oppPlayers: typeof bhPlayers = [];
+  const topScorer = [...players].sort((a, b) => b.points - a.points)[0];
+  const topRebounder = [...players].sort((a, b) => b.rebounds - a.rebounds)[0];
+  const topPlaymaker = [...players].sort((a, b) => b.assists - a.assists)[0];
 
   return (
     <div className="flex flex-col min-h-screen bg-surface">
@@ -87,7 +91,7 @@ export default function StreamingPage() {
                   {/* Center Info */}
                   <div className="text-center px-4 md:px-12 flex-shrink-0">
                     <div className="bg-surface-container-highest px-3 md:px-6 py-1.5 font-headline text-[10px] md:text-xs text-on-surface-variant mb-2 md:mb-4 inline-block">
-                      Q3 — 04:12
+                      {liveGame.quarter ?? "Q3"} — {liveGame.clock ?? "04:12"}
                     </div>
                     <p className="font-headline text-[10px] md:text-xs text-on-surface-variant uppercase hidden sm:block">
                       {liveGame.venue}
@@ -95,11 +99,11 @@ export default function StreamingPage() {
                     <div className="mt-4 flex justify-center gap-4">
                       <div className="text-center">
                         <p className="font-headline text-[10px] text-on-surface-variant uppercase">Fouls</p>
-                        <p className="font-stats text-sm text-on-surface">14</p>
+                        <p className="font-stats text-sm text-on-surface">{liveGame.fouls ?? 14}</p>
                       </div>
                       <div className="text-center">
                         <p className="font-headline text-[10px] text-on-surface-variant uppercase">Timeouts</p>
-                        <p className="font-stats text-sm text-on-surface">3</p>
+                        <p className="font-stats text-sm text-on-surface">{liveGame.timeouts ?? 3}</p>
                       </div>
                     </div>
                   </div>
@@ -130,7 +134,7 @@ export default function StreamingPage() {
                     Field Goal %
                   </p>
                   <p className="font-stats text-2xl text-on-surface">
-                    48.2
+                    {liveGame.fgPct ?? 48.2}
                   </p>
                 </div>
                 <div className="p-4 bg-surface-container-low border-l-4 border-secondary hover:bg-surface-container transition-colors duration-300">
@@ -138,7 +142,7 @@ export default function StreamingPage() {
                     3-Point %
                   </p>
                   <p className="font-stats text-2xl text-on-surface">
-                    36.7
+                    {liveGame.threePct ?? 36.7}
                   </p>
                 </div>
                 <div className="p-4 bg-surface-container-low border-l-4 border-primary hover:bg-surface-container transition-colors duration-300">
@@ -146,7 +150,7 @@ export default function StreamingPage() {
                     Free Throw %
                   </p>
                   <p className="font-stats text-2xl text-on-surface">
-                    82.1
+                    {liveGame.ftPct ?? 82.1}
                   </p>
                 </div>
                 <div className="p-4 bg-surface-container-low border-l-4 border-secondary hover:bg-surface-container transition-colors duration-300">
@@ -154,7 +158,7 @@ export default function StreamingPage() {
                     Turnovers
                   </p>
                   <p className="font-stats text-2xl text-on-surface">
-                    8
+                    {liveGame.turnovers ?? 8}
                   </p>
                 </div>
               </div>
@@ -177,17 +181,17 @@ export default function StreamingPage() {
                     <tbody>
                       <tr className="border-b border-outline-variant">
                         <td className="px-4 py-2 font-headline text-xs text-on-surface">Bravehearts</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">22</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">28</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-primary font-bold">18</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">{liveGame.q1 ?? 22}</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">{liveGame.q2 ?? 28}</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-primary font-bold">{liveGame.q3 ?? 18}</td>
                         <td className="px-4 py-2 text-center font-stats text-sm text-on-surface-variant">—</td>
                         <td className="px-4 py-2 text-center font-stats text-sm text-primary font-bold">{liveGame.scoreFor}</td>
                       </tr>
                       <tr>
                         <td className="px-4 py-2 font-headline text-xs text-on-surface">{liveGame.opponent}</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">20</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">24</td>
-                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface font-bold">16</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">{liveGame.q1 ?? 20}</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface">{liveGame.q2 ?? 24}</td>
+                        <td className="px-4 py-2 text-center font-stats text-sm text-on-surface font-bold">{liveGame.q3 ?? 16}</td>
                         <td className="px-4 py-2 text-center font-stats text-sm text-on-surface-variant">—</td>
                         <td className="px-4 py-2 text-center font-stats text-sm text-on-surface font-bold">{liveGame.scoreAgainst}</td>
                       </tr>
@@ -238,6 +242,11 @@ export default function StreamingPage() {
                   <p className="font-headline text-xs text-on-surface-variant mb-3 uppercase tracking-wider">
                     {liveGame.opponent.toUpperCase()}
                   </p>
+                  {oppPlayers.length === 0 ? (
+                    <p className="font-body text-xs text-on-surface-variant p-2">
+                      Opponent lineup published at tip-off.
+                    </p>
+                  ) : (
                   <div className="space-y-2">
                     {oppPlayers.map((p) => (
                       <div
@@ -258,6 +267,7 @@ export default function StreamingPage() {
                       </div>
                     ))}
                   </div>
+                  )}
                 </div>
               </div>
 
@@ -279,12 +289,12 @@ export default function StreamingPage() {
                           POINTS
                         </p>
                         <p className="font-body text-on-surface font-bold text-sm">
-                          K. Mwale
+                          {topScorer.fullName}
                         </p>
                       </div>
                     </div>
                     <p className="font-stats text-2xl text-primary">
-                      24
+                      {topScorer.points}
                     </p>
                   </div>
                   <div className="flex justify-between items-center border-b border-outline-variant pb-3">
@@ -297,12 +307,12 @@ export default function StreamingPage() {
                           REBOUNDS
                         </p>
                         <p className="font-body text-on-surface font-bold text-sm">
-                          C. Banda
+                          {topRebounder.fullName}
                         </p>
                       </div>
                     </div>
                     <p className="font-stats text-2xl text-secondary">
-                      12
+                      {topRebounder.rebounds}
                     </p>
                   </div>
                   <div className="flex justify-between items-center">
@@ -315,12 +325,12 @@ export default function StreamingPage() {
                           ASSISTS
                         </p>
                         <p className="font-body text-on-surface font-bold text-sm">
-                          T. Phiri
+                          {topPlaymaker.fullName}
                         </p>
                       </div>
                     </div>
                     <p className="font-stats text-2xl text-primary">
-                      8
+                      {topPlaymaker.assists}
                     </p>
                   </div>
                 </div>

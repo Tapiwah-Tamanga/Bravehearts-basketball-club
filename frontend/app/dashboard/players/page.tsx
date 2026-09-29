@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { players as initialPlayers } from "@/lib/mock-data";
+import { players as initialPlayers, perGame } from "@/lib/mock-data";
 import type { Player } from "@/types";
 
 export default function PlayersPage() {
@@ -127,13 +127,13 @@ export default function PlayersPage() {
                     </span>
                   </td>
                   <td className="p-4 font-stats text-on-surface">
-                    {(player.points / 20).toFixed(1)}
+                    {perGame(player.points, player)}
                   </td>
                   <td className="p-4 font-stats text-on-surface">
-                    {(player.rebounds / 20).toFixed(1)}
+                    {perGame(player.rebounds, player)}
                   </td>
                   <td className="p-4 font-stats text-on-surface">
-                    {(player.assists / 20).toFixed(1)}
+                    {perGame(player.assists, player)}
                   </td>
                   <td className="p-4 text-right">
                     <button

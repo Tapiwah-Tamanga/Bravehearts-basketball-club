@@ -2,11 +2,11 @@
 
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { events, games } from "@/lib/mock-data";
+import { events, getUpcomingGames } from "@/lib/mock-data";
 import Link from "next/link";
 
 export default function TicketsPage() {
-  const upcomingGames = games.slice(0, 3);
+  const upcomingGames = getUpcomingGames().slice(0, 3);
 
   return (
     <div className="flex flex-col min-h-screen">

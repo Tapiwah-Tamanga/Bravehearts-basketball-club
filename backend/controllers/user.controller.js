@@ -20,92 +20,112 @@ const transporter = nodemailer.createTransport({
 
 // Create User and Send Welcome Email
 export const createUser = async (req, res) => {
-  const { email, password, name } = req.body;
+  try {
+    const { email, password, name, role } = req.body;
 
-  const checkEmail = await User.findOne({ where: { email } });
+    const checkEmail = await User.findOne({ where: { email } });
 
-  if (checkEmail) {
-    return res.status(400).json({
-      status: false,
-      message: "Email has been used",
-      data: [],
+    if (checkEmail) {
+      return res.status(400).json({
+        status: false,
+        message: "Email has been used",
+        data: [],
+      });
+    }
+
+    const hashed_password = bcrypt.hashSync(password, 10);
+
+    const user = await User.create({ email, name, password: hashed_password, ...(role ? { role } : {}) });
+
+    if (!user) {
+      return res.status(400).json({
+        status: false,
+        message: "Could not create the user",
+        data: [],
+      });
+    }
+
+    // ponytail: welcome email must never fail registration (SMTP often unconfigured)
+    try {
+      await transporter.sendMail({
+        from: `"BraveHearts" <${process.env.EMAIL_FROM}>`,
+        to: user.email,
+        subject: "Welcome to BraveHearts Basketball Club!",
+        html: `<p>Hello <strong>${user.name}</strong>, welcome to BraveHearts!</p>`,
+      });
+    } catch (mailErr) {
+      console.log("Welcome email skipped:", mailErr.message);
+    }
+
+    return res.status(201).json({
+      status: true,
+      message: "User registered successfully",
+      data: user,
     });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error.message, data: [] });
   }
-
-  const hashed_password = bcrypt.hashSync(password, 10);
-
-  const user = await User.create({ email, name, password: hashed_password });
-
-  if (!user) {
-    return res.status(400).json({
-      status: false,
-      message: "Could not create the user",
-      data: [],
-    });
-  }
-
-  // Send welcome email
-    await transporter.sendMail({
-      from: `"BraveHearts" <${process.env.EMAIL_FROM}>`,
-      to: user.email,
-      subject: "Welcome to BraveHearts Basketball Club!",
-      html: `<p>Hello <strong>${user.name}</strong>, welcome to BraveHearts!</p>`,
-    });
-
-  return res.status(201).json({
-    status: true,
-    message: "User registered successfully",
-    data: user,
-  });
 };
 
 //User login
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
 
-  if (!user) {
-    return res.status(404).json({
-      status: false,
-      message: "Invalid email or password",
-      data: [],
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "Invalid email or password",
+        data: [],
+      });
+    }
+
+    const comparePassword = bcrypt.compareSync(password, user.password);
+
+    if (!comparePassword) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid email or password",
+        data: [],
+      });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        status: false,
+        message: "Server misconfigured: JWT_SECRET missing from .env",
+        data: [],
+      });
+    }
+
+    let payload = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
+    let token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
     });
-  }
 
-  const comparePassword = bcrypt.compareSync(password, user.password);
+    payload.token = token;
 
-  if (!comparePassword) {
-    return res.status(400).json({
-      status: false,
-      message: "Invalid email or password",
-      data: [],
-    });
-  }
-
-   let payload = {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-  };
-  let token = jwt.sign({ id: user.id, email: user.email, name: user.named }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-
-  payload.token = token;
-
-  return res.status(200).json({
-    status: true,
-    message: "Login successful",
-    data: {
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
+    return res.status(200).json({
+      status: true,
+      message: "Login successful",
+      data: {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        token,
       },
-      token,
-    },
-  });
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error.message, data: [] });
+  }
 };
 
 //Forgot password

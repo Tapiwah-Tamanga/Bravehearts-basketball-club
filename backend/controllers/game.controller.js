@@ -1,4 +1,6 @@
 import Game from "../models/game.model.js";
+import Team from "../models/team.model.js";
+import { GamePlay, TicketTier } from "../models/index.js";
 
 export const createGame = async (req, res) => {
   try {
@@ -50,6 +52,8 @@ export const getGameById = async (req, res) => {
           model: Team,
           attributes: ["id", "name", "category"],
         },
+        { model: GamePlay },
+        { model: TicketTier },
       ],
     });
 
