@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { getPlayerById, getPlayersByTeam, getTeamByCategory } from "@/lib/mock-data";
+import { getPlayerById, getPlayersByTeam, getTeamByCategory, perGame, gamesPlayedOf, splitName } from "@/lib/mock-data";
 import Link from "next/link";
 
 export default function PlayerDetailPage() {
@@ -40,11 +40,12 @@ export default function PlayerDetailPage() {
     );
   }
 
-  const ppg = (player.points / 20).toFixed(1);
-  const rpg = (player.rebounds / 20).toFixed(1);
-  const apg = (player.assists / 20).toFixed(1);
-  const spg = (player.steals / 20).toFixed(1);
-  const bpg = (player.blocks / 20).toFixed(1);
+  const ppg = perGame(player.points, player);
+  const rpg = perGame(player.rebounds, player);
+  const apg = perGame(player.assists, player);
+  const spg = perGame(player.steals, player);
+  const bpg = perGame(player.blocks, player);
+  const { first, last } = splitName(player.fullName);
 
   const statBars = [
     { label: "Points", value: player.points, max: 600, color: "bg-primary" },
@@ -113,10 +114,10 @@ export default function PlayerDetailPage() {
                 </div>
 
                 <h1 className="font-headline text-3xl md:text-5xl font-black uppercase leading-none mb-2">
-                  {player.fullName.split(" ").slice(0, -1).join(" ")}
+                  {first}
                   <br />
                   <span className="text-primary">
-                    {player.fullName.split(" ").slice(-1)}
+                    {last}
                   </span>
                 </h1>
 
@@ -275,7 +276,7 @@ export default function PlayerDetailPage() {
                     Games Played
                   </p>
                   <p className="font-stats text-2xl font-bold text-secondary">
-                    20
+                    {gamesPlayedOf(player)}
                   </p>
                 </div>
               </div>

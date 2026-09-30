@@ -3,10 +3,10 @@
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
-import { games } from "@/lib/mock-data";
+import { getLiveGame } from "@/lib/mock-data";
 
 export default function HomePage() {
-  const liveGame = games[0];
+  const liveGame = getLiveGame()!;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -59,10 +59,10 @@ export default function HomePage() {
               <div className="bg-surface-container-lowest p-6 border border-surface-container-high shadow-2xl relative z-10">
                 <div className="flex justify-between items-center mb-4 border-b border-surface-container-high pb-2">
                   <span className="font-headline text-xs text-secondary font-bold pulse-live">
-                    LIVE NOW
+                    {liveGame.status === "live" || liveGame.isLive ? "LIVE NOW" : liveGame.status === "upcoming" ? "UPCOMING" : "FINAL"}
                   </span>
                   <span className="font-stats text-2xl text-on-surface">
-                    Q3 - 04:12
+                    {liveGame.quarter ?? "Q3"} - {liveGame.clock ?? "04:12"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-12 mb-6">

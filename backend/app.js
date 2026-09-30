@@ -8,6 +8,7 @@ import gameRoutes from "./routes/game.route.js";
 import eventRoutes from "./routes/event.route.js";
 import statRoutes from "./routes/stat.route.js";
 import dashboardRoutes from "./routes/dashboard.route.js";
+import clubRoutes from "./routes/club.route.js";
 import { sequelize } from "./config/db.config.js";
 import path from 'path';
 
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(cors({
-  origin: ['https://json.schema.org', 'https://localhost:3000']
+  origin: ['http://localhost:3000', 'http://localhost:3001']
 }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,6 +47,7 @@ app.use("/api/games", gameRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stats", statRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/club", clubRoutes);
 
 
 
