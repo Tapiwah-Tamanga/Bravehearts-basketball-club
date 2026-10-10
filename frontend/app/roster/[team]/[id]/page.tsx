@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
@@ -22,6 +23,24 @@ export default function PlayerDetailPage() {
     getPlayersByTeam(teamSlug)
   );
   const team = getTeamByCategory(teamSlug);
+  // ponytail: API resolves in ms on localhost — don't flash "Not Found" first
+  const [waited, setWaited] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setWaited(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (!player && !waited) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <TopNavBar />
+        <main className="flex-1 flex items-center justify-center">
+          <p className="font-headline text-2xl text-on-surface-variant">Loading player…</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!player) {
     return (

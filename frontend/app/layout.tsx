@@ -3,6 +3,7 @@ import "./globals.css";
 import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"),
   title: "Bravehearts Basketball | Lilongwe, Malawi",
   description:
     "Bravehearts Basketball Club — Lilongwe's elite basketball team. Defending champions, community icons. Join us for thrilling basketball action in the Warm Heart of Africa.",

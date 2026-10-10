@@ -26,11 +26,11 @@ const RESOURCES: Resource[] = [
   { key: "tiers", label: "Ticket Tiers", path: "/api/club/ticket-tiers", fields: [
     { name: "name", kind: "select", options: ["Standard", "Premium", "SeasonPass"] },
     { name: "description", kind: "text" }, { name: "price", kind: "number" },
-    { name: "capacity", kind: "number" }, { name: "GameId", kind: "number" } ] },
+    { name: "capacity", kind: "number" }, { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" } ] },
   { key: "orders", label: "Ticket Orders", path: "/api/club/ticket-orders", readonly: true, fields: [
     { name: "buyerName", kind: "text" }, { name: "email", kind: "text" },
     { name: "qty", kind: "number" }, { name: "status", kind: "select", options: ["pending", "paid", "cancelled"] },
-    { name: "GameId", kind: "number" }, { name: "TicketTierId", kind: "number" } ] },
+    { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" }, { name: "TicketTierId", kind: "fk", path: "/api/club/ticket-tiers", label: "name" } ] },
   { key: "news", label: "News", path: "/api/club/news", fields: [
     { name: "tag", kind: "text" }, { name: "title", kind: "text" },
     { name: "excerpt", kind: "textarea" }, { name: "image", kind: "text" },
@@ -43,7 +43,7 @@ const RESOURCES: Resource[] = [
     { name: "status", kind: "select", options: ["Available", "Full"] } ] },
   { key: "prospects", label: "Draft Prospects", path: "/api/club/prospects", fields: [
     { name: "name", kind: "text" }, { name: "position", kind: "text" },
-    { name: "notes", kind: "textarea" }, { name: "TeamId", kind: "number" } ] },
+    { name: "notes", kind: "textarea" }, { name: "TeamId", kind: "fk", path: "/api/teams", label: "name" } ] },
   { key: "broadcasts", label: "Broadcasts", path: "/api/club/broadcasts", fields: [
     { name: "audience", kind: "text" },
     { name: "channel", kind: "select", options: ["SMS", "Push", "Email"] },
@@ -59,7 +59,7 @@ const RESOURCES: Resource[] = [
     { name: "time", kind: "text" }, { name: "play", kind: "text" },
     { name: "score", kind: "text" },
     { name: "type", kind: "select", options: ["score", "rebound", "assist", "steal", "block", "other"] },
-    { name: "GameId", kind: "number" } ] },
+    { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" } ] },
 ];
 
 type Row = Record<string, string | number | boolean | null>;
@@ -211,7 +211,7 @@ export default function ContentPage() {
                 for (const f of active.fields) {
                   if (f.kind === "check") {
                     body[f.name] = fd.get(f.name) === "on";
-                  } else if (f.kind === "number") {
+                  } else if (f.kind === "number" || f.kind === "fk") {
                     const v = fd.get(f.name);
                     body[f.name] = v === null || v === "" ? null : Number(v);
                   } else {
