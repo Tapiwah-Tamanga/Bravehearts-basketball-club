@@ -3,10 +3,19 @@
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
-import { getLiveGame } from "@/lib/mock-data";
+import { useState } from "react";
+import { games as mockGames } from "@/lib/mock-data";
+import { useLive, post } from "@/lib/api";
+import type { Game } from "@/types";
 
 export default function HomePage() {
-  const liveGame = getLiveGame()!;
+  const games = useLive<Game[]>("/api/games", mockGames);
+  const liveGame =
+    games.find((g) => g.status === "live" || g.isLive) ??
+    games.find((g) => g.status === "upcoming") ??
+    games[0];
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -290,17 +299,27 @@ export default function HomePage() {
               Get exclusive access to behind-the-scenes content, ticket
               pre-sales, and real-time game alerts.
             </p>
-            <form className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <form
+              className="flex flex-col md:flex-row gap-3 md:gap-4"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (!email) return;
+                await post("/api/club/subscribers", { email });
+                setSubscribed(true);
+              }}
+            >
               <input
                 className="flex-grow bg-surface-container-lowest border-2 border-surface-variant focus:border-primary focus:ring-0 text-on-surface p-3 md:p-4 shadow-sm font-body"
                 placeholder="Enter your email address"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button
                 type="submit"
                 className="bg-primary text-on-primary px-8 md:px-12 py-3 md:py-4 font-headline text-lg md:text-2xl uppercase hover:shadow-lg transition-all"
               >
-                SUBSCRIBE
+                {subscribed ? "SUBSCRIBED ✓" : "SUBSCRIBE"}
               </button>
             </form>
           </div>

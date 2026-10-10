@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { players as initialPlayers, perGame } from "@/lib/mock-data";
+import { del, get, post, put, useLive } from "@/lib/api";
 import type { Player } from "@/types";
 
 export default function PlayersPage() {
+  const livePlayers = useLive<Player[]>("/api/players", initialPlayers);
   const [playerList, setPlayerList] = useState<Player[]>(initialPlayers);
+  useEffect(() => setPlayerList(livePlayers), [livePlayers]);
   const [search, setSearch] = useState("");
   const [filterTeam, setFilterTeam] = useState("All");
   const [showForm, setShowForm] = useState(false);
@@ -19,7 +22,8 @@ export default function PlayersPage() {
     return matchesSearch && matchesTeam;
   });
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
+    await del(`/api/players/${id}`);
     setPlayerList(playerList.filter((p) => p.id !== id));
   };
 
@@ -172,8 +176,40 @@ export default function PlayersPage() {
               </button>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const num = (k: string) => {
+                  const v = fd.get(k);
+                  return v === null || v === "" ? undefined : Number(v);
+                };
+                const body = {
+                  fullName: String(fd.get("fullName") || ""),
+                  jerseyNumber: Number(fd.get("jerseyNumber") || 0),
+                  position: String(fd.get("position") || "PG"),
+                  team: String(fd.get("team") || "Ladies"),
+                  height: num("height"),
+                  age: num("age"),
+                  photo: String(fd.get("photo") || "") || undefined,
+                  marketValue: num("marketValue"),
+                  points: num("points"),
+                  assists: num("assists"),
+                  rebounds: num("rebounds"),
+                  steals: num("steals"),
+                  blocks: num("blocks"),
+                  year: String(fd.get("year") || "") || undefined,
+                  status: String(fd.get("status") || "") || undefined,
+                  threePointPct: num("threePointPct"),
+                  freeThrowPct: num("freeThrowPct"),
+                  gamesPlayed: num("gamesPlayed"),
+                };
+                if (editingPlayer) {
+                  await put(`/api/players/${editingPlayer.id}`, body);
+                } else {
+                  await post("/api/players", body);
+                }
+                const fresh = await get<Player[]>("/api/players");
+                if (fresh) setPlayerList(fresh);
                 setShowForm(false);
               }}
               className="space-y-4"
@@ -184,6 +220,7 @@ export default function PlayersPage() {
                 </label>
                 <input
                   type="text"
+                  name="fullName"
                   defaultValue={editingPlayer?.fullName || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
@@ -195,6 +232,7 @@ export default function PlayersPage() {
                   </label>
                   <input
                     type="number"
+                    name="jerseyNumber"
                     defaultValue={editingPlayer?.jerseyNumber || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
@@ -204,6 +242,7 @@ export default function PlayersPage() {
                     Position
                   </label>
                   <select
+                    name="position"
                     defaultValue={editingPlayer?.position || "PG"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   >
@@ -221,6 +260,7 @@ export default function PlayersPage() {
                     Team
                   </label>
                   <select
+                    name="team"
                     defaultValue={editingPlayer?.team || "Ladies"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   >
@@ -237,8 +277,129 @@ export default function PlayersPage() {
                   </label>
                   <input
                     type="number"
+                    name="height"
                     defaultValue={editingPlayer?.height || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Age
+                  </label>
+                  <input
+                    type="number"
+                    name="age"
+                    defaultValue={editingPlayer?.age || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Market Value (MWK)
+                  </label>
+                  <input
+                    type="number"
+                    name="marketValue"
+                    defaultValue={editingPlayer?.marketValue || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Games Played
+                  </label>
+                  <input
+                    type="number"
+                    name="gamesPlayed"
+                    defaultValue={editingPlayer?.gamesPlayed || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                  Photo URL
+                </label>
+                <input
+                  type="text"
+                  name="photo"
+                  defaultValue={editingPlayer?.photo || ""}
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Year
+                  </label>
+                  <select
+                    name="year"
+                    defaultValue={editingPlayer?.year || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  >
+                    <option value="">—</option>
+                    <option value="Freshman">Freshman</option>
+                    <option value="Sophomore">Sophomore</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Senior">Senior</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Status
+                  </label>
+                  <select
+                    name="status"
+                    defaultValue={editingPlayer?.status || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  >
+                    <option value="">—</option>
+                    <option value="Starter">Starter</option>
+                    <option value="Bench">Bench</option>
+                    <option value="Reserve">Reserve</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-5 gap-4">
+                {(["points", "assists", "rebounds", "steals", "blocks"] as const).map((f) => (
+                  <div key={f}>
+                    <label className="font-headline text-xs text-on-surface-variant block mb-1 uppercase">
+                      {f.slice(0, 3)}
+                    </label>
+                    <input
+                      type="number"
+                      name={f}
+                      defaultValue={editingPlayer?.[f] || ""}
+                      className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    3-Point %
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    name="threePointPct"
+                    defaultValue={editingPlayer?.threePointPct || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Free Throw %
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    name="freeThrowPct"
+                    defaultValue={editingPlayer?.freeThrowPct || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
                   />
                 </div>
               </div>

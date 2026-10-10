@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { players, games, teams, getWinRate } from "@/lib/mock-data";
+import { post } from "@/lib/api";
 
 export default function DashboardPage() {
   const winRate = getWinRate();
   const totalPlayers = players.length;
+  const [broadcast, setBroadcast] = useState("");
+  const [sent, setSent] = useState(false);
 
   return (
     <div>
@@ -243,9 +247,22 @@ export default function DashboardPage() {
           <div className="relative">
             <textarea
               className="w-full bg-surface-container border border-outline-variant text-sm p-4 focus:ring-1 focus:ring-primary-container h-24 resize-none text-on-surface"
-              placeholder="Type urgent update..."
+              placeholder={sent ? "Broadcast sent ✓" : "Type urgent update..."}
+              value={broadcast}
+              onChange={(e) => {
+                setBroadcast(e.target.value);
+                setSent(false);
+              }}
             />
-            <button className="absolute bottom-2 right-2 text-primary-container hover:scale-110 transition-transform">
+            <button
+              onClick={async () => {
+                if (!broadcast.trim()) return;
+                await post("/api/club/broadcasts", { message: broadcast, channel: "Push", audience: "all" });
+                setBroadcast("");
+                setSent(true);
+              }}
+              className="absolute bottom-2 right-2 text-primary-container hover:scale-110 transition-transform"
+            >
               <span className="material-symbols-outlined">send</span>
             </button>
           </div>

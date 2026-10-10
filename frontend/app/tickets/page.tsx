@@ -2,11 +2,19 @@
 
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { events, getUpcomingGames } from "@/lib/mock-data";
+import { events as mockEvents, games as mockGames } from "@/lib/mock-data";
+import { useLive } from "@/lib/api";
+import type { Event, Game } from "@/types";
 import Link from "next/link";
 
 export default function TicketsPage() {
-  const upcomingGames = getUpcomingGames().slice(0, 3);
+  const games = useLive<Game[]>("/api/games", mockGames);
+  const events = useLive<Event[]>("/api/events", mockEvents);
+  const now = new Date();
+  const upcomingGames = games
+    .filter((g) => g.status === "upcoming" || (!g.status && new Date(g.gameDate) > now))
+    .sort((a, b) => +new Date(a.gameDate) - +new Date(b.gameDate))
+    .slice(0, 3);
 
   return (
     <div className="flex flex-col min-h-screen">
