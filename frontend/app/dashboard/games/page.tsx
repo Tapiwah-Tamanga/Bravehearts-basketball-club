@@ -37,7 +37,7 @@ export default function GamesPage() {
   return (
     <div>
       {/* Header */}
-      <header className="flex justify-between items-end mb-12">
+      <header className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-12">
         <div>
           <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Game Management
@@ -144,8 +144,8 @@ export default function GamesPage() {
 
       {/* Modal Form */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
-          <div className="bg-surface-container-lowest border border-outline-variant p-12 w-full max-w-lg shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4 overflow-y-auto">
+          <div className="bg-surface-container-lowest border border-outline-variant p-6 md:p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-headline text-2xl text-on-surface">
                 {editingGame ? "Edit Game" : "Add New Game"}
@@ -216,7 +216,7 @@ export default function GamesPage() {
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Game Date
@@ -246,7 +246,7 @@ export default function GamesPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Score (For)
@@ -284,7 +284,7 @@ export default function GamesPage() {
                   </select>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Season
@@ -315,7 +315,7 @@ export default function GamesPage() {
                   <label className="font-headline text-xs text-on-surface-variant">Is Live</label>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Quarter
@@ -361,7 +361,7 @@ export default function GamesPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {(["q1", "q2", "q3", "q4"] as const).map((f) => (
                   <div key={f}>
                     <label className="font-headline text-xs text-on-surface-variant block mb-1 uppercase">
@@ -376,7 +376,7 @@ export default function GamesPage() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {(["fgPct", "threePct", "ftPct", "turnovers"] as const).map((f) => (
                   <div key={f}>
                     <label className="font-headline text-xs text-on-surface-variant block mb-1">

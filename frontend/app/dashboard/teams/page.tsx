@@ -24,7 +24,7 @@ export default function TeamsPage() {
 
   return (
     <div>
-      <header className="flex justify-between items-end mb-12">
+      <header className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-12">
         <div>
           <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Team Management
@@ -47,7 +47,7 @@ export default function TeamsPage() {
 
       <div className="bg-surface-container-lowest border border-outline-variant overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[720px] text-left border-collapse">
             <thead>
               <tr className="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-headline text-xs">
                 <th className="p-4">Team</th>
@@ -86,8 +86,8 @@ export default function TeamsPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
-          <div className="bg-surface-container-lowest border border-outline-variant p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4 overflow-y-auto">
+          <div className="bg-surface-container-lowest border border-outline-variant p-6 md:p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-headline text-2xl text-on-surface">
                 {editingTeam ? "Edit Team" : "Add New Team"}
@@ -130,7 +130,7 @@ export default function TeamsPage() {
                 <label className="font-headline text-xs text-on-surface-variant block mb-1">Name</label>
                 <input type="text" name="name" defaultValue={editingTeam?.name || ""} className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">Category</label>
                   <select name="category" defaultValue={editingTeam?.category || "Men"} className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body">
@@ -149,7 +149,7 @@ export default function TeamsPage() {
                   </select>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">Coach</label>
                   <input type="text" name="coach" defaultValue={editingTeam?.coach || ""} className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body" />
@@ -163,7 +163,7 @@ export default function TeamsPage() {
                 <label className="font-headline text-xs text-on-surface-variant block mb-1">Description</label>
                 <textarea name="description" defaultValue={editingTeam?.description || ""} className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body h-24 resize-none" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">Icon</label>
                   <input type="text" name="icon" defaultValue={editingTeam?.icon || ""} className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body" />

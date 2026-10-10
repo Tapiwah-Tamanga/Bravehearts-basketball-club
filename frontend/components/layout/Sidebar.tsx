@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navItems = [
+export const navItems = [
   { href: "/dashboard", label: "Overview", icon: "dashboard" },
   { href: "/dashboard/teams", label: "Teams", icon: "shield" },
   { href: "/dashboard/players", label: "Players", icon: "groups" },
@@ -28,7 +28,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-grow space-y-1">
+      <nav className="flex-grow min-h-0 overflow-y-auto space-y-1">
         {navItems.map((item) => {
           const isActive =
             item.href === "/dashboard"
@@ -88,10 +88,10 @@ export default function Sidebar() {
 
       {/* Bottom Actions */}
       <div className="px-6 mt-auto border-t border-surface-container-highest pt-6 space-y-4">
-        <button className="w-full bg-primary text-on-primary py-4 px-6 font-headline text-xs hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 shadow-md">
+        <Link href="/dashboard/players" className="w-full bg-primary text-on-primary py-4 px-6 font-headline text-xs hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 shadow-md">
           <span className="material-symbols-outlined">person_add</span>
           Add New Player
-        </button>
+        </Link>
         <div className="flex items-center gap-4 px-2 py-1">
           <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
             <span className="material-symbols-outlined text-on-primary text-sm">
