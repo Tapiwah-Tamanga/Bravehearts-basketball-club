@@ -3,7 +3,9 @@
 import { useParams } from "next/navigation";
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { getPlayerById, getPlayersByTeam, getTeamByCategory, perGame, gamesPlayedOf, splitName } from "@/lib/mock-data";
+import { getPlayerById, getPlayersByTeam, getTeamByCategory, perGame, gamesPlayedOf, splitName, players as mockPlayers } from "@/lib/mock-data";
+import { useLive } from "@/lib/api";
+import type { Player } from "@/types";
 import Link from "next/link";
 
 export default function PlayerDetailPage() {
@@ -11,8 +13,14 @@ export default function PlayerDetailPage() {
   const teamSlug = params.team as string;
   const playerId = parseInt(params.id as string);
 
-  const player = getPlayerById(playerId);
-  const teamPlayers = getPlayersByTeam(teamSlug);
+  const player = useLive<Player | undefined>(
+    `/api/players/${playerId}`,
+    getPlayerById(playerId)
+  );
+  const teamPlayers = useLive<Player[]>(
+    `/api/players/team/${teamSlug}`,
+    getPlayersByTeam(teamSlug)
+  );
   const team = getTeamByCategory(teamSlug);
 
   if (!player) {
@@ -153,7 +161,7 @@ export default function PlayerDetailPage() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                   {[
                     { label: "PPG", value: ppg },
                     { label: "RPG", value: rpg },

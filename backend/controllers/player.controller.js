@@ -1,8 +1,17 @@
 import Player from "../models/player.model.js";
 import Team from "../models/team.model.js";
+
+// ponytail: TeamId FK is what roster-by-team queries filter on —
+// always resolve it from the `team` name so admin writes reflect on front pages.
+const withTeamId = async (body) => {
+  if (body.TeamId || !body.team) return body;
+  const team = await Team.findOne({ where: { category: body.team } });
+  return team ? { ...body, TeamId: team.id } : body;
+};
+
 export const createPlayer = async (req, res) => {
   try {
-    const player = await Player.create(req.body);
+    const player = await Player.create(await withTeamId(req.body));
 
     res.status(201).json({
       success: true,
@@ -144,7 +153,7 @@ export const updatePlayer = async (req, res) => {
       });
     }
 
-    await player.update(req.body);
+    await player.update(await withTeamId(req.body));
 
     res.status(200).json({
       success: true,

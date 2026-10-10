@@ -1,15 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { games as initialGames } from "@/lib/mock-data";
-import type { Game, GameResult } from "@/types";
+import { useEffect, useState } from "react";
+import { games as initialGames, teams as initialTeams } from "@/lib/mock-data";
+import { del, get, post, put, useLive } from "@/lib/api";
+import type { Game, GameResult, Team } from "@/types";
 
 export default function GamesPage() {
+  const liveGames = useLive<Game[]>("/api/games", initialGames);
+  const teams = useLive<Team[]>("/api/teams", initialTeams);
   const [gameList, setGameList] = useState<Game[]>(initialGames);
+  useEffect(() => setGameList(liveGames), [liveGames]);
   const [showForm, setShowForm] = useState(false);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
+    await del(`/api/games/${id}`);
     setGameList(gameList.filter((g) => g.id !== id));
   };
 
@@ -32,7 +37,7 @@ export default function GamesPage() {
   return (
     <div>
       {/* Header */}
-      <header className="flex justify-between items-end mb-12">
+      <header className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-12">
         <div>
           <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Game Management
@@ -139,8 +144,8 @@ export default function GamesPage() {
 
       {/* Modal Form */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
-          <div className="bg-surface-container-lowest border border-outline-variant p-12 w-full max-w-lg shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4 overflow-y-auto">
+          <div className="bg-surface-container-lowest border border-outline-variant p-6 md:p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-headline text-2xl text-on-surface">
                 {editingGame ? "Edit Game" : "Add New Game"}
@@ -153,8 +158,49 @@ export default function GamesPage() {
               </button>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const num = (k: string) => {
+                  const v = fd.get(k);
+                  return v === null || v === "" ? undefined : Number(v);
+                };
+                const str = (k: string) => {
+                  const v = String(fd.get(k) || "");
+                  return v === "" ? undefined : v;
+                };
+                const body = {
+                  opponent: String(fd.get("opponent") || ""),
+                  gameDate: String(fd.get("gameDate") || ""),
+                  venue: str("venue"),
+                  scoreFor: num("scoreFor"),
+                  scoreAgainst: num("scoreAgainst"),
+                  result: str("result"),
+                  season: str("season"),
+                  status: str("status"),
+                  quarter: str("quarter"),
+                  clock: str("clock"),
+                  q1: num("q1"),
+                  q2: num("q2"),
+                  q3: num("q3"),
+                  q4: num("q4"),
+                  fouls: num("fouls"),
+                  timeouts: num("timeouts"),
+                  fgPct: num("fgPct"),
+                  threePct: num("threePct"),
+                  ftPct: num("ftPct"),
+                  turnovers: num("turnovers"),
+                  streamUrl: str("streamUrl"),
+                  isLive: fd.get("isLive") === "on",
+                  TeamId: Number(fd.get("TeamId") || 0) || undefined,
+                };
+                if (editingGame) {
+                  await put(`/api/games/${editingGame.id}`, body);
+                } else {
+                  await post("/api/games", body);
+                }
+                const fresh = await get<Game[]>("/api/games");
+                if (fresh) setGameList(fresh);
                 setShowForm(false);
               }}
               className="space-y-4"
@@ -165,17 +211,19 @@ export default function GamesPage() {
                 </label>
                 <input
                   type="text"
+                  name="opponent"
                   defaultValue={editingGame?.opponent || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Game Date
                   </label>
                   <input
                     type="datetime-local"
+                    name="gameDate"
                     defaultValue={
                       editingGame
                         ? new Date(editingGame.gameDate)
@@ -192,18 +240,20 @@ export default function GamesPage() {
                   </label>
                   <input
                     type="text"
+                    name="venue"
                     defaultValue={editingGame?.venue || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="font-headline text-xs text-on-surface-variant block mb-1">
                     Score (For)
                   </label>
                   <input
                     type="number"
+                    name="scoreFor"
                     defaultValue={editingGame?.scoreFor || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
                   />
@@ -214,6 +264,7 @@ export default function GamesPage() {
                   </label>
                   <input
                     type="number"
+                    name="scoreAgainst"
                     defaultValue={editingGame?.scoreAgainst || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
                   />
@@ -223,6 +274,7 @@ export default function GamesPage() {
                     Result
                   </label>
                   <select
+                    name="result"
                     defaultValue={editingGame?.result || "WIN"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   >
@@ -231,6 +283,139 @@ export default function GamesPage() {
                     <option value="DRAW">DRAW</option>
                   </select>
                 </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Season
+                  </label>
+                  <input
+                    type="text"
+                    name="season"
+                    defaultValue={editingGame?.season || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Status
+                  </label>
+                  <select
+                    name="status"
+                    defaultValue={editingGame?.status || "upcoming"}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  >
+                    <option value="upcoming">Upcoming</option>
+                    <option value="live">Live</option>
+                    <option value="finished">Finished</option>
+                  </select>
+                </div>
+                <div className="flex items-end gap-2 pb-2">
+                  <input type="checkbox" name="isLive" defaultChecked={editingGame?.isLive || false} className="w-4 h-4" />
+                  <label className="font-headline text-xs text-on-surface-variant">Is Live</label>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Quarter
+                  </label>
+                  <input
+                    type="text"
+                    name="quarter"
+                    defaultValue={editingGame?.quarter || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Clock
+                  </label>
+                  <input
+                    type="text"
+                    name="clock"
+                    defaultValue={editingGame?.clock || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Fouls
+                  </label>
+                  <input
+                    type="number"
+                    name="fouls"
+                    defaultValue={editingGame?.fouls || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                  />
+                </div>
+                <div>
+                  <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                    Timeouts
+                  </label>
+                  <input
+                    type="number"
+                    name="timeouts"
+                    defaultValue={editingGame?.timeouts || ""}
+                    className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {(["q1", "q2", "q3", "q4"] as const).map((f) => (
+                  <div key={f}>
+                    <label className="font-headline text-xs text-on-surface-variant block mb-1 uppercase">
+                      {f}
+                    </label>
+                    <input
+                      type="number"
+                      name={f}
+                      defaultValue={editingGame?.[f] || ""}
+                      className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {(["fgPct", "threePct", "ftPct", "turnovers"] as const).map((f) => (
+                  <div key={f}>
+                    <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                      {f}
+                    </label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      name={f}
+                      defaultValue={editingGame?.[f] || ""}
+                      className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div>
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                  Stream URL
+                </label>
+                <input
+                  type="text"
+                  name="streamUrl"
+                  defaultValue={editingGame?.streamUrl || ""}
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                />
+              </div>
+              <div>
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                  Team
+                </label>
+                <select
+                  name="TeamId"
+                  defaultValue={(editingGame as Game & { TeamId?: number })?.TeamId || teams[0]?.id || ""}
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                >
+                  {teams.map((t) => (
+                    <option key={t.id} value={t.id}>{t.name}</option>
+                  ))}
+                </select>
               </div>
               <div className="flex gap-4 pt-4">
                 <button
