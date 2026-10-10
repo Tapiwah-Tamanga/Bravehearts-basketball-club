@@ -9,14 +9,16 @@ import {
   getPlayersByTeam,
   getTeamByCategory,
   getWinRate,
-  getRecentGames,
-  getUpcomingGame,
   getTeamMetrics,
   getTrainingStats,
   perGame,
   formatHeight,
   splitName,
+  games as mockGames,
+  teams as mockTeams,
 } from "@/lib/mock-data";
+import { useLive } from "@/lib/api";
+import type { Game, Team } from "@/types";
 import type { Player, Position } from "@/types";
 
 const positions: Position[] = ["PG", "SG", "SF", "PF", "C"];
@@ -137,11 +139,21 @@ export default function RosterPage() {
   const teamSlug = params.team as string;
   const [selectedPosition, setSelectedPosition] = useState<Position | "ALL">("ALL");
 
-  const teamPlayers = getPlayersByTeam(teamSlug);
-  const team = getTeamByCategory(teamSlug);
+  const teamPlayers = useLive<Player[]>(
+    `/api/players/team/${teamSlug}`,
+    getPlayersByTeam(teamSlug)
+  );
+  const teams = useLive<Team[]>("/api/teams", mockTeams);
+  const team = teams.find((t) => t.category.toLowerCase() === teamSlug) ?? getTeamByCategory(teamSlug);
   const winRate = getWinRate();
-  const recentGames = getRecentGames();
-  const nextGame = getUpcomingGame() ?? recentGames[0];
+  const games = useLive<Game[]>("/api/games", mockGames);
+  const now = new Date();
+  const recentGames = games
+    .filter((g) => g.status === "finished" || (!g.status && new Date(g.gameDate) <= now))
+    .sort((a, b) => +new Date(b.gameDate) - +new Date(a.gameDate));
+  const nextGame =
+    games.find((g) => g.status === "upcoming" || (!g.status && new Date(g.gameDate) > now)) ??
+    recentGames[0];
   const teamMetrics = getTeamMetrics(teamSlug);
   const trainingStats = getTrainingStats(teamSlug);
 

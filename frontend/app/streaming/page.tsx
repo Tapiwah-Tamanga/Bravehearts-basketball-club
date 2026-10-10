@@ -2,17 +2,25 @@
 
 import TopNavBar from "@/components/layout/TopNavBar";
 import Footer from "@/components/layout/Footer";
-import { getLiveGame, players } from "@/lib/mock-data";
+import { games as mockGames, players as mockPlayers } from "@/lib/mock-data";
+import { useLive } from "@/lib/api";
+import type { Game, Player } from "@/types";
 import Link from "next/link";
 
 export default function StreamingPage() {
-  const liveGame = getLiveGame()!;
-  const bhPlayers = players.filter((p) => p.team === "Men").slice(0, 5);
+  const games = useLive<Game[]>("/api/games", mockGames);
+  const liveGame =
+    games.find((g) => g.status === "live" || g.isLive) ??
+    games.find((g) => g.status === "upcoming") ??
+    games[0];
+  const men = useLive<Player[]>("/api/players/team/Men", mockPlayers.filter((p) => p.team === "Men"));
+  const bhPlayers = (men.length ? men : mockPlayers.filter((p) => p.team === "Men")).slice(0, 5);
   // ponytail: opponent roster isn't ours — don't masquerade Ladies as opponents
-  const oppPlayers: typeof bhPlayers = [];
-  const topScorer = [...players].sort((a, b) => b.points - a.points)[0];
-  const topRebounder = [...players].sort((a, b) => b.rebounds - a.rebounds)[0];
-  const topPlaymaker = [...players].sort((a, b) => b.assists - a.assists)[0];
+  const oppPlayers: Player[] = [];
+  const pool = men.length ? men : mockPlayers;
+  const topScorer = [...pool].sort((a, b) => b.points - a.points)[0];
+  const topRebounder = [...pool].sort((a, b) => b.rebounds - a.rebounds)[0];
+  const topPlaymaker = [...pool].sort((a, b) => b.assists - a.assists)[0];
 
   return (
     <div className="flex flex-col min-h-screen bg-surface">
