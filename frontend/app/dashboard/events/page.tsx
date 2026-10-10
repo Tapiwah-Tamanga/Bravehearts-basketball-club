@@ -1,15 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { events as initialEvents } from "@/lib/mock-data";
+import { del, get, post, put, useLive } from "@/lib/api";
 import type { Event } from "@/types";
 
 export default function EventsPage() {
+  const liveEvents = useLive<Event[]>("/api/events", initialEvents);
   const [eventList, setEventList] = useState<Event[]>(initialEvents);
+  useEffect(() => setEventList(liveEvents), [liveEvents]);
   const [showForm, setShowForm] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
+    await del(`/api/events/${id}`);
     setEventList(eventList.filter((e) => e.id !== id));
   };
 
@@ -121,8 +125,23 @@ export default function EventsPage() {
               </button>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const body = {
+                  title: String(fd.get("title") || ""),
+                  description: String(fd.get("description") || ""),
+                  location: String(fd.get("location") || ""),
+                  eventDate: String(fd.get("eventDate") || ""),
+                  poster: String(fd.get("poster") || "") || undefined,
+                };
+                if (editingEvent) {
+                  await put(`/api/events/${editingEvent.id}`, body);
+                } else {
+                  await post("/api/events", body);
+                }
+                const fresh = await get<Event[]>("/api/events");
+                if (fresh) setEventList(fresh);
                 setShowForm(false);
               }}
               className="space-y-4"
@@ -133,6 +152,7 @@ export default function EventsPage() {
                 </label>
                 <input
                   type="text"
+                  name="title"
                   defaultValue={editingEvent?.title || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
@@ -142,6 +162,7 @@ export default function EventsPage() {
                   Description
                 </label>
                 <textarea
+                  name="description"
                   defaultValue={editingEvent?.description || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body h-24 resize-none"
                 />
@@ -153,6 +174,7 @@ export default function EventsPage() {
                   </label>
                   <input
                     type="text"
+                    name="location"
                     defaultValue={editingEvent?.location || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
@@ -163,6 +185,7 @@ export default function EventsPage() {
                   </label>
                   <input
                     type="datetime-local"
+                    name="eventDate"
                     defaultValue={
                       editingEvent
                         ? new Date(editingEvent.eventDate)
@@ -173,6 +196,17 @@ export default function EventsPage() {
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
                 </div>
+              </div>
+              <div>
+                <label className="font-headline text-xs text-on-surface-variant block mb-1">
+                  Poster URL
+                </label>
+                <input
+                  type="text"
+                  name="poster"
+                  defaultValue={editingEvent?.poster || ""}
+                  className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
+                />
               </div>
               <div className="flex gap-4 pt-4">
                 <button

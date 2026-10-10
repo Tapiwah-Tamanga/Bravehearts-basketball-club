@@ -68,6 +68,7 @@ export const getGamesPerTeam = async (req, res) => {
     const stats = {};
 
     games.forEach((game) => {
+      if (!game.Team) return; // ponytail: un-teamed games don't count per-team
       const teamName = game.Team.name;
 
       if (!stats[teamName]) {
