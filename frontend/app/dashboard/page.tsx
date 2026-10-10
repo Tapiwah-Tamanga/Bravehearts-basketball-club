@@ -13,16 +13,16 @@ export default function DashboardPage() {
   return (
     <div>
       {/* Header Actions */}
-      <header className="flex justify-between items-end mb-12">
+      <header className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-12">
         <div>
           <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">
             Command Center
           </p>
-          <h2 className="font-headline text-4xl text-on-surface">
+          <h2 className="font-headline text-3xl md:text-4xl text-on-surface">
             Administrative Overview
           </h2>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <div className="bg-surface-container-lowest border border-outline-variant px-4 py-2 flex items-center gap-4 shadow-sm">
             <span className="material-symbols-outlined text-primary">
               calendar_today
@@ -39,14 +39,14 @@ export default function DashboardPage() {
       {/* Bento Grid Dashboard */}
       <div className="bento-grid">
         {/* Hero Stats: Player Registrations */}
-        <section className="col-span-12 md:col-span-8 bg-surface-container-lowest border border-outline-variant p-12 relative overflow-hidden shadow-sm">
+        <section className="col-span-12 md:col-span-8 bg-surface-container-lowest border border-outline-variant p-6 md:p-12 relative overflow-hidden shadow-sm">
           <div className="relative z-10">
             <h3 className="font-headline text-2xl mb-6">
               Player Enrollment Flow
             </h3>
-            <div className="flex items-end gap-12">
+            <div className="flex items-end gap-6 md:gap-12">
               <div>
-                <p className="font-stats text-7xl text-primary leading-none">
+                <p className="font-stats text-5xl md:text-7xl text-primary leading-none">
                   {totalPlayers}
                 </p>
                 <p className="font-headline text-xs text-secondary mt-1 font-bold">
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             </h3>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full min-w-[720px] text-left border-collapse">
               <thead>
                 <tr className="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-headline text-xs">
                   <th className="p-4">Team Division</th>

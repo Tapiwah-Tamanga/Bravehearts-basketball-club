@@ -11,7 +11,8 @@ type Field =
   | { name: string; kind: "datetime" }
   | { name: string; kind: "textarea" }
   | { name: string; kind: "check" }
-  | { name: string; kind: "select"; options: string[] };
+  | { name: string; kind: "select"; options: string[] }
+  | { name: string; kind: "fk"; path: string; label: string };
 
 interface Resource {
   key: string;
@@ -25,11 +26,11 @@ const RESOURCES: Resource[] = [
   { key: "tiers", label: "Ticket Tiers", path: "/api/club/ticket-tiers", fields: [
     { name: "name", kind: "select", options: ["Standard", "Premium", "SeasonPass"] },
     { name: "description", kind: "text" }, { name: "price", kind: "number" },
-    { name: "capacity", kind: "number" }, { name: "GameId", kind: "number" } ] },
+    { name: "capacity", kind: "number" }, { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" } ] },
   { key: "orders", label: "Ticket Orders", path: "/api/club/ticket-orders", readonly: true, fields: [
     { name: "buyerName", kind: "text" }, { name: "email", kind: "text" },
     { name: "qty", kind: "number" }, { name: "status", kind: "select", options: ["pending", "paid", "cancelled"] },
-    { name: "GameId", kind: "number" }, { name: "TicketTierId", kind: "number" } ] },
+    { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" }, { name: "TicketTierId", kind: "fk", path: "/api/club/ticket-tiers", label: "name" } ] },
   { key: "news", label: "News", path: "/api/club/news", fields: [
     { name: "tag", kind: "text" }, { name: "title", kind: "text" },
     { name: "excerpt", kind: "textarea" }, { name: "image", kind: "text" },
@@ -42,7 +43,7 @@ const RESOURCES: Resource[] = [
     { name: "status", kind: "select", options: ["Available", "Full"] } ] },
   { key: "prospects", label: "Draft Prospects", path: "/api/club/prospects", fields: [
     { name: "name", kind: "text" }, { name: "position", kind: "text" },
-    { name: "notes", kind: "textarea" }, { name: "TeamId", kind: "number" } ] },
+    { name: "notes", kind: "textarea" }, { name: "TeamId", kind: "fk", path: "/api/teams", label: "name" } ] },
   { key: "broadcasts", label: "Broadcasts", path: "/api/club/broadcasts", fields: [
     { name: "audience", kind: "text" },
     { name: "channel", kind: "select", options: ["SMS", "Push", "Email"] },
@@ -58,7 +59,7 @@ const RESOURCES: Resource[] = [
     { name: "time", kind: "text" }, { name: "play", kind: "text" },
     { name: "score", kind: "text" },
     { name: "type", kind: "select", options: ["score", "rebound", "assist", "steal", "block", "other"] },
-    { name: "GameId", kind: "number" } ] },
+    { name: "GameId", kind: "fk", path: "/api/games", label: "opponent" } ] },
 ];
 
 type Row = Record<string, string | number | boolean | null>;
@@ -68,6 +69,19 @@ const inputCls =
 
 function FieldInput({ field, value }: { field: Field; value: unknown }) {
   const str = value == null ? "" : String(value);
+  if (field.kind === "fk") {
+    const opts = useLive<Row[]>(field.path, []);
+    return (
+      <select name={field.name} defaultValue={str} className={inputCls}>
+        <option value="">—</option>
+        {opts.map((o) => (
+          <option key={String(o.id)} value={String(o.id)}>
+            #{String(o.id)} — {String(o[field.label] ?? "")}
+          </option>
+        ))}
+      </select>
+    );
+  }
   if (field.kind === "select")
     return (
       <select name={field.name} defaultValue={str} className={inputCls}>
@@ -107,7 +121,7 @@ export default function ContentPage() {
 
   return (
     <div>
-      <header className="flex justify-between items-end mb-6">
+      <header className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-6">
         <div>
           <p className="font-headline text-xs text-secondary uppercase tracking-widest mb-1">Content Management</p>
           <h2 className="font-headline text-4xl text-on-surface">{active.label}</h2>
@@ -138,11 +152,11 @@ export default function ContentPage() {
 
       <div className="bg-surface-container-lowest border border-outline-variant overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[720px] text-left border-collapse">
             <thead>
               <tr className="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-headline text-xs">
-                {cols.map((c) => (
-                  <th key={c} className="p-4 capitalize">{c}</th>
+                {cols.map((c, i) => (
+                  <th key={c} className={`p-4 capitalize ${i === 0 ? "sticky left-0 bg-surface-container-low z-10" : ""}`}>{c}</th>
                 ))}
                 <th className="p-4 text-right">Actions</th>
               </tr>
@@ -150,8 +164,8 @@ export default function ContentPage() {
             <tbody className="divide-y divide-outline-variant">
               {rows.map((row) => (
                 <tr key={String(row.id)} className="hover:bg-primary/5 transition-colors">
-                  {cols.map((c) => (
-                    <td key={c} className="p-4 font-body text-sm text-on-surface max-w-[240px] truncate">
+                  {cols.map((c, i) => (
+                    <td key={c} className={`p-4 font-body text-sm text-on-surface max-w-[240px] truncate ${i === 0 ? "sticky left-0 bg-surface-container-lowest z-10" : ""}`}>
                       {row[c] == null ? "—" : String(row[c]).slice(0, 60)}
                     </td>
                   ))}
@@ -179,8 +193,8 @@ export default function ContentPage() {
       </div>
 
       {showForm && !active.readonly && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
-          <div className="bg-surface-container-lowest border border-outline-variant p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4 overflow-y-auto">
+          <div className="bg-surface-container-lowest border border-outline-variant p-6 md:p-12 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-headline text-2xl text-on-surface">
                 {editing ? `Edit ${active.label.slice(0, -1)}` : `Add ${active.label.slice(0, -1)}`}
@@ -197,7 +211,7 @@ export default function ContentPage() {
                 for (const f of active.fields) {
                   if (f.kind === "check") {
                     body[f.name] = fd.get(f.name) === "on";
-                  } else if (f.kind === "number") {
+                  } else if (f.kind === "number" || f.kind === "fk") {
                     const v = fd.get(f.name);
                     body[f.name] = v === null || v === "" ? null : Number(v);
                   } else {
