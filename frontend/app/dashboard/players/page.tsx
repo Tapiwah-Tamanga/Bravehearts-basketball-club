@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { players as initialPlayers, perGame } from "@/lib/mock-data";
+import { del, get, post, put, useLive } from "@/lib/api";
 import { del, get, post, put, useLive } from "@/lib/api";
 import type { Player } from "@/types";
 
 export default function PlayersPage() {
   const livePlayers = useLive<Player[]>("/api/players", initialPlayers);
+  const livePlayers = useLive<Player[]>("/api/players", initialPlayers);
   const [playerList, setPlayerList] = useState<Player[]>(initialPlayers);
+  useEffect(() => setPlayerList(livePlayers), [livePlayers]);
   useEffect(() => setPlayerList(livePlayers), [livePlayers]);
   const [search, setSearch] = useState("");
   const [filterTeam, setFilterTeam] = useState("All");
@@ -22,6 +26,8 @@ export default function PlayersPage() {
     return matchesSearch && matchesTeam;
   });
 
+  const handleDelete = async (id: number) => {
+    await del(`/api/players/${id}`);
   const handleDelete = async (id: number) => {
     await del(`/api/players/${id}`);
     setPlayerList(playerList.filter((p) => p.id !== id));
@@ -177,7 +183,40 @@ export default function PlayersPage() {
             </div>
             <form
               onSubmit={async (e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const num = (k: string) => {
+                  const v = fd.get(k);
+                  return v === null || v === "" ? undefined : Number(v);
+                };
+                const body = {
+                  fullName: String(fd.get("fullName") || ""),
+                  jerseyNumber: Number(fd.get("jerseyNumber") || 0),
+                  position: String(fd.get("position") || "PG"),
+                  team: String(fd.get("team") || "Ladies"),
+                  height: num("height"),
+                  age: num("age"),
+                  photo: String(fd.get("photo") || "") || undefined,
+                  marketValue: num("marketValue"),
+                  points: num("points"),
+                  assists: num("assists"),
+                  rebounds: num("rebounds"),
+                  steals: num("steals"),
+                  blocks: num("blocks"),
+                  year: String(fd.get("year") || "") || undefined,
+                  status: String(fd.get("status") || "") || undefined,
+                  threePointPct: num("threePointPct"),
+                  freeThrowPct: num("freeThrowPct"),
+                  gamesPlayed: num("gamesPlayed"),
+                };
+                if (editingPlayer) {
+                  await put(`/api/players/${editingPlayer.id}`, body);
+                } else {
+                  await post("/api/players", body);
+                }
+                const fresh = await get<Player[]>("/api/players");
+                if (fresh) setPlayerList(fresh);
                 const fd = new FormData(e.currentTarget);
                 const num = (k: string) => {
                   const v = fd.get(k);
@@ -221,6 +260,7 @@ export default function PlayersPage() {
                 <input
                   type="text"
                   name="fullName"
+                  name="fullName"
                   defaultValue={editingPlayer?.fullName || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
@@ -233,6 +273,7 @@ export default function PlayersPage() {
                   <input
                     type="number"
                     name="jerseyNumber"
+                    name="jerseyNumber"
                     defaultValue={editingPlayer?.jerseyNumber || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
@@ -242,6 +283,7 @@ export default function PlayersPage() {
                     Position
                   </label>
                   <select
+                    name="position"
                     name="position"
                     defaultValue={editingPlayer?.position || "PG"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
@@ -261,6 +303,7 @@ export default function PlayersPage() {
                   </label>
                   <select
                     name="team"
+                    name="team"
                     defaultValue={editingPlayer?.team || "Ladies"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   >
@@ -277,6 +320,7 @@ export default function PlayersPage() {
                   </label>
                   <input
                     type="number"
+                    name="height"
                     name="height"
                     defaultValue={editingPlayer?.height || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
