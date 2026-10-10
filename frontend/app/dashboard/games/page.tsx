@@ -4,24 +4,15 @@ import { useEffect, useState } from "react";
 import { games as initialGames, teams as initialTeams } from "@/lib/mock-data";
 import { del, get, post, put, useLive } from "@/lib/api";
 import type { Game, GameResult, Team } from "@/types";
-import { useEffect, useState } from "react";
-import { games as initialGames, teams as initialTeams } from "@/lib/mock-data";
-import { del, get, post, put, useLive } from "@/lib/api";
-import type { Game, GameResult, Team } from "@/types";
 
 export default function GamesPage() {
   const liveGames = useLive<Game[]>("/api/games", initialGames);
   const teams = useLive<Team[]>("/api/teams", initialTeams);
-  const liveGames = useLive<Game[]>("/api/games", initialGames);
-  const teams = useLive<Team[]>("/api/teams", initialTeams);
   const [gameList, setGameList] = useState<Game[]>(initialGames);
-  useEffect(() => setGameList(liveGames), [liveGames]);
   useEffect(() => setGameList(liveGames), [liveGames]);
   const [showForm, setShowForm] = useState(false);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
 
-  const handleDelete = async (id: number) => {
-    await del(`/api/games/${id}`);
   const handleDelete = async (id: number) => {
     await del(`/api/games/${id}`);
     setGameList(gameList.filter((g) => g.id !== id));
@@ -168,49 +159,7 @@ export default function GamesPage() {
             </div>
             <form
               onSubmit={async (e) => {
-              onSubmit={async (e) => {
                 e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                const num = (k: string) => {
-                  const v = fd.get(k);
-                  return v === null || v === "" ? undefined : Number(v);
-                };
-                const str = (k: string) => {
-                  const v = String(fd.get(k) || "");
-                  return v === "" ? undefined : v;
-                };
-                const body = {
-                  opponent: String(fd.get("opponent") || ""),
-                  gameDate: String(fd.get("gameDate") || ""),
-                  venue: str("venue"),
-                  scoreFor: num("scoreFor"),
-                  scoreAgainst: num("scoreAgainst"),
-                  result: str("result"),
-                  season: str("season"),
-                  status: str("status"),
-                  quarter: str("quarter"),
-                  clock: str("clock"),
-                  q1: num("q1"),
-                  q2: num("q2"),
-                  q3: num("q3"),
-                  q4: num("q4"),
-                  fouls: num("fouls"),
-                  timeouts: num("timeouts"),
-                  fgPct: num("fgPct"),
-                  threePct: num("threePct"),
-                  ftPct: num("ftPct"),
-                  turnovers: num("turnovers"),
-                  streamUrl: str("streamUrl"),
-                  isLive: fd.get("isLive") === "on",
-                  TeamId: Number(fd.get("TeamId") || 0) || undefined,
-                };
-                if (editingGame) {
-                  await put(`/api/games/${editingGame.id}`, body);
-                } else {
-                  await post("/api/games", body);
-                }
-                const fresh = await get<Game[]>("/api/games");
-                if (fresh) setGameList(fresh);
                 const fd = new FormData(e.currentTarget);
                 const num = (k: string) => {
                   const v = fd.get(k);
@@ -263,7 +212,6 @@ export default function GamesPage() {
                 <input
                   type="text"
                   name="opponent"
-                  name="opponent"
                   defaultValue={editingGame?.opponent || ""}
                   className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                 />
@@ -275,7 +223,6 @@ export default function GamesPage() {
                   </label>
                   <input
                     type="datetime-local"
-                    name="gameDate"
                     name="gameDate"
                     defaultValue={
                       editingGame
@@ -294,7 +241,6 @@ export default function GamesPage() {
                   <input
                     type="text"
                     name="venue"
-                    name="venue"
                     defaultValue={editingGame?.venue || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
                   />
@@ -308,7 +254,6 @@ export default function GamesPage() {
                   <input
                     type="number"
                     name="scoreFor"
-                    name="scoreFor"
                     defaultValue={editingGame?.scoreFor || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
                   />
@@ -320,7 +265,6 @@ export default function GamesPage() {
                   <input
                     type="number"
                     name="scoreAgainst"
-                    name="scoreAgainst"
                     defaultValue={editingGame?.scoreAgainst || ""}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-stats"
                   />
@@ -330,7 +274,6 @@ export default function GamesPage() {
                     Result
                   </label>
                   <select
-                    name="result"
                     name="result"
                     defaultValue={editingGame?.result || "WIN"}
                     className="w-full bg-surface border border-outline-variant px-4 py-2 text-sm focus:ring-2 focus:ring-primary-container font-body"
