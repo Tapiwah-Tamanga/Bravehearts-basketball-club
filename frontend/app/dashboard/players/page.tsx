@@ -183,7 +183,6 @@ export default function PlayersPage() {
             </div>
             <form
               onSubmit={async (e) => {
-              onSubmit={async (e) => {
                 e.preventDefault();
                 const fd = new FormData(e.currentTarget);
                 const num = (k: string) => {
